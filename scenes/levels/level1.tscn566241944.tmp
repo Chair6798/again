@@ -1,0 +1,72 @@
+[gd_scene load_steps=6 format=3 uid="uid://cyt0vt2r0hik"]
+
+[ext_resource type="Script" uid="uid://cjhld0rml0bxy" path="res://scripts/game/level/level.gd" id="1_4tcl0"]
+[ext_resource type="Texture2D" uid="uid://cwu3psy7kmg5l" path="res://texture/bg/lines.jpg" id="1_x6ivy"]
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_amk87"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0l062"]
+size = Vector2(200, 1050.13)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dd0lh"]
+size = Vector2(50, 1000)
+
+[node name="Level" type="Node2D"]
+script = ExtResource("1_4tcl0")
+
+[node name="floor" type="StaticBody2D" parent="."]
+position = Vector2(-3, 389)
+
+[node name="body" type="Sprite2D" parent="floor"]
+z_index = -10
+texture = ExtResource("1_x6ivy")
+region_enabled = true
+region_rect = Rect2(0, 0, 2000, 300)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="floor"]
+position = Vector2(0, -149)
+shape = SubResource("WorldBoundaryShape2D_amk87")
+
+[node name="wall_left" type="StaticBody2D" parent="."]
+position = Vector2(-584, -481)
+
+[node name="body" type="Sprite2D" parent="wall_left"]
+z_index = -10
+rotation = 1.5708
+texture = ExtResource("1_x6ivy")
+region_enabled = true
+region_rect = Rect2(0, 0, 1050.13, 300)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="wall_left"]
+position = Vector2(51, 0)
+shape = SubResource("RectangleShape2D_0l062")
+
+[node name="wall_right" type="StaticBody2D" parent="."]
+position = Vector2(584, -481)
+rotation = -3.14159
+
+[node name="body" type="Sprite2D" parent="wall_right"]
+z_index = -10
+rotation = 1.5708
+texture = ExtResource("1_x6ivy")
+region_enabled = true
+region_rect = Rect2(0, 0, 1050.13, 300)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="wall_right"]
+position = Vector2(51, 0)
+shape = SubResource("RectangleShape2D_0l062")
+
+[node name="LevelChanger" type="Area2D" parent="."]
+position = Vector2(656, 39)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LevelChanger"]
+shape = SubResource("RectangleShape2D_dd0lh")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+position = Vector2(-669, 0)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+shape = SubResource("RectangleShape2D_dd0lh")
+
+[node name="spawn" type="Node2D" parent="."]
+position = Vector2(-536, 143)

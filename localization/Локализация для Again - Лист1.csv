@@ -1,0 +1,65 @@
+keys,ru,en
+LEVEL1,Всё просто,It's all simple
+LEVEL2,Всё ещё просто,Still simple
+LEVEL3,"Думай, что делаешь",Think about what you're doing
+LEVEL4,Найди кнопку,Find the button
+LEVEL5,Поставь что-нибудь,Put something on
+LEVEL6,Запасной выход,Emergency exit
+LEVEL7,Где бы найти свет?,Where can I find light?
+LEVEL7_1,А так светло,And it's so light
+LEVEL8,Что-то не так?,Something wrong?
+LEVEL9,Толкай,Push
+LEVEL10,Не выпущу!,I won't let you out!
+LEVEL11,Сломай,Break it
+LEVEL12,Даже не пытайся,Don't even try
+LEVEL13,Саймон говорит,Simon says
+LEVEL13R,Нажми на правую кнопку,Click the right button
+LEVEL13L,Нажми на левую кнопку,Click on the left button
+LEVEL14,Не нарушая правила дорожного движения,Without breaking traffic rules
+LEVEL15,В космос,Into space
+LEVEL16,Не,Not
+LEVEL16_1,всё так просто,all so simple
+LEVEL17,Тебе что-то нужно?,Do you need something?
+LEVEL17_1,Скажи мне,Tell me
+LEVEL17ANSW,кнопка,button
+LEVEL18,Не упади!,Don't fall!
+LEVEL19,Вокруг оси,Around the axis
+LEVEL20,Сменим тему,Let's change the topic
+LEVELFINISH,"Спасибо, что поиграли в мою головоломку. Я буду очень рад, если вы оставите свой отзыв в магазине приложений и/или в социальных сетях(Ссылки в меню).
+СПАСИБО!","Thank you for playing my puzzle game. I'd love it if you'd leave a review in the app store and/or on social media (links in the menu).
+THANK YOU!"
+LEVEL1_HINT,Просто пройди вправо,Just go to the right
+LEVEL2_HINT,Встань на кнопку,Stand on the button
+LEVEL3_HINT,Пройди не нажимая на кнопку,Pass without pressing the button
+LEVEL4_HINT,Кнопка спрятана под одним из шипов,The button is hidden under one of the spikes.
+LEVEL5_HINT,"На этом уровне не получится просто нажать на кнопку\nУрони куб на кнопку, сломав платформу под ним.","At this level, you can't just press the button\nDrop the cube onto the button, breaking the platform underneath it."
+LEVEL6_HINT,Нажав на кнопку ты увидишь изменение в стене - это проход,By pressing the button you will see a change in the wall - this is a passage
+LEVEL7_HINT,,#VALUE!
+LEVEL8_HINT,Просто пройди к выходу(выход всегда справа),Just go to the exit (the exit is always on the right)
+LEVEL9_HINT,Толкни дверь персонажем,Push the door with a character
+LEVEL10_HINT,"Нажми на рычаг, который находится над лазером",Press the lever that is above the laser
+LEVEL11_HINT,Нажимай на дверь чтобы ломать её,Click on the door to break it.
+LEVEL12_HINT,"Просто подожди, пока дверь откроется сама.",Just wait for the door to open itself.
+LEVEL13_HINT,Подчинись саймону.,Submit to Simon.
+LEVEL14_HINT,"Верхушка кнопки-светофор. Не двигайся, когда горит красным.",The top of the button is a traffic light. Don't move when the light is red.
+LEVEL15_HINT,Встань в центр и прыгни,Stand in the center and jump
+LEVEL16_HINT,Закрой 'Не',Close 'No'
+LEVEL17_HINT,Нажми на затемнённую область и введи 'кнопка',Click on the shaded area and type 'button'
+LEVEL18_HINT,"У тебя отрицательная гравитация, платформа сверху катается по кругу и может вернутся позже сли ты упустил её","You have negative gravity, the platform above is rolling in a circle and can return later if you missed it."
+LEVEL19_HINT,"Уровень крутится вокруг центра, могу посоветовать спрятатся на старте, так как там барьер, затем после переворота комнаты более чем на 180 градусов двигайся к финишу. Когда комната встанет примерно в нормальное положение нажми на кнопку и проходи.","The level revolves around the center. I recommend hiding at the start, as there's a barrier there. Then, after the room flips more than 180 degrees, move toward the finish line. When the room returns to its normal position, press the button and proceed."
+LEVEL20_HINT,Пришло время сменить арену!,It's time to change the arena!
+MENU_PLAY,Играть,Play
+MENU_LEVELS,Уровни,Levels
+MENU_CUSTOM_LEVELS,Пользовательские уровни,User levels
+MENU_EXIT,Выйти,Exit
+MENU_BACK,Назад,Back
+MENU_YES,Да,Yes
+MENU_NO,Нет,No
+MENU_RESET_CONFIRM_LABEL,"Вы уверены, что хотите стереть весь свой прогресс?",Are you sure you want to erase all your progress?
+MENU_SURE,Уверены?,Are you sure?
+MENU_TOMENU,Вернуться меню,Return to menu
+MENU_HINT,Подсказка,Clue
+MENU_CLOSE,Закрыть,Close
+MENU_ADD,Добавить,Add
+MENU_INFO,Подробнее,Read more
+PRELOAD_MAIN,Идёт подготовка уровней,Levels are being prepared

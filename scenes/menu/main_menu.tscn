@@ -1,0 +1,814 @@
+[gd_scene format=3 uid="uid://bhtruu0vjkwwv"]
+
+[ext_resource type="FontFile" uid="uid://kkoribig7dtr" path="res://fonts/Oswald/static/Oswald-Light.ttf" id="2_3rkf3"]
+[ext_resource type="FontFile" uid="uid://da35q26unljcs" path="res://fonts/Oswald/Oswald-VariableFont_wght.ttf" id="2_247la"]
+[ext_resource type="FontFile" uid="uid://bquldmv35neae" path="res://fonts/Oswald/static/Oswald-Bold.ttf" id="3_247la"]
+[ext_resource type="Texture2D" uid="uid://cks5yvdc70b73" path="res://texture/social_network/telegram.svg" id="4_isoef"]
+[ext_resource type="Script" uid="uid://c166wke66gt3g" path="res://scripts/ui/social_link.gd" id="5_qgo02"]
+[ext_resource type="Texture2D" uid="uid://ddflagguevg16" path="res://texture/social_network/da.png" id="6_1k4da"]
+[ext_resource type="Texture2D" uid="uid://x2iu2ac5cadw" path="res://texture/social_network/rustore.png" id="6_vovv2"]
+[ext_resource type="Texture2D" uid="uid://isxaywg06ivd" path="res://texture/social_network/vk.png" id="7_1k4da"]
+[ext_resource type="Texture2D" uid="uid://c1eabsjfjnnog" path="res://texture/social_network/boosty.png" id="7_bbqo6"]
+[ext_resource type="Texture2D" uid="uid://drneofe8641hj" path="res://texture/ui/refresh.png" id="8_1k4da"]
+[ext_resource type="Texture2D" uid="uid://b3sdtbpis3llp" path="res://texture/flags/rusflag.jpg" id="11_d4hu8"]
+[ext_resource type="Texture2D" uid="uid://biwgc3hmxqxg4" path="res://texture/flags/americaflag.jpg" id="12_p1nwe"]
+[ext_resource type="FontFile" uid="uid://bon7ut2w2w8ji" path="res://fonts/Comfortaa/static/Comfortaa-Bold.ttf" id="13_prbor"]
+[ext_resource type="FontFile" uid="uid://d1yx6sa1mpwvg" path="res://fonts/Intel_One_Mono/static/IntelOneMono-BoldItalic.ttf" id="14_27h4x"]
+
+[sub_resource type="GDScript" id="GDScript_3rkf3"]
+resource_name = "menu_level"
+script/source = "extends \"res://scripts/game/level/level.gd\"
+
+func _ready() -> void:
+	super._ready()
+	
+"
+
+[sub_resource type="GDScript" id="GDScript_xn6kt"]
+resource_name = "levellist"
+script/source = "extends ItemList
+
+var lock_texture = preload(\"res://texture/ui/locked.png\")
+
+func _picked(a):
+	Root.load_level_number(a+1)
+
+func _ready() -> void:
+	item_selected.connect(_picked)
+
+func update():
+	while item_count>0:
+		remove_item(0)
+	
+	var c = Root.level_count
+	for i in range(1,c+1):
+		var id = add_item(str(i))
+		if Root.lastavaiable<i:
+			set_item_icon(id,lock_texture)
+"
+
+[sub_resource type="GDScript" id="GDScript_247la"]
+resource_name = "exitlist"
+script/source = "extends Button
+
+func _pressed() -> void:
+	get_parent().visible=false
+	get_parent().get_parent().get_node(\"level_list\").visible=false
+	get_parent().get_parent().get_node(\"mainbuttons\").visible=true
+"
+
+[sub_resource type="GDScript" id="GDScript_hj162"]
+resource_name = "playbtn"
+script/source = "extends Button
+
+func _pressed() -> void:
+	Root.load_level_number(Root.currentLevel)
+"
+
+[sub_resource type="GDScript" id="GDScript_nl8w3"]
+resource_name = "levelsbtn"
+script/source = "extends Button
+
+func _pressed() -> void:
+	get_parent().get_parent().get_parent().get_node(\"level_list\").visible=true
+	get_parent().get_parent().get_parent().get_node(\"exit_list_button\").visible=true
+	get_parent().get_parent().get_parent().get_node(\"level_list\").update()
+	get_parent().get_parent().visible=false
+"
+
+[sub_resource type="GDScript" id="GDScript_27h4x"]
+resource_name = "levelsbtn"
+script/source = "extends Button
+
+func _pressed() -> void:
+	get_parent().get_parent().get_parent().get_node(\"clevels\").visible=true
+	get_parent().get_parent().visible=false
+"
+
+[sub_resource type="GDScript" id="GDScript_bbqo6"]
+resource_name = "levelsbtn"
+script/source = "extends Button
+
+func _pressed() -> void:
+	get_parent().get_parent().get_parent().get_node(\"locale\").visible=true
+	get_parent().get_parent().visible=false
+"
+
+[sub_resource type="GDScript" id="GDScript_kiqgm"]
+resource_name = "exit"
+script/source = "extends Button
+
+func _pressed() -> void:
+	get_tree().quit()
+"
+
+[sub_resource type="GDScript" id="GDScript_isoef"]
+resource_name = "accBTN"
+script/source = "extends Button
+
+func _pressed() -> void:
+	get_parent().get_parent().visible = false
+	get_parent().get_parent().get_parent().get_node(\"AccountMenuGroup\").visible=true
+"
+
+[sub_resource type="GDScript" id="GDScript_1k4da"]
+resource_name = "reset"
+script/source = "extends TextureButton
+@onready var wind:ConfirmationDialog = get_parent().get_parent().get_parent().get_node(\"confirm_reset\")
+func _pressed() -> void:
+	wind.popup_centered()
+"
+
+[sub_resource type="GDScript" id="GDScript_qgo02"]
+resource_name = "accmenuex"
+script/source = "extends Button
+
+func _pressed() -> void:
+	get_parent().get_parent().get_parent().visible = false
+	get_parent().get_parent().get_parent().get_parent().get_node(\"mainbuttons\").visible=true
+"
+
+[sub_resource type="Theme" id="Theme_bbqo6"]
+default_font_size = 30
+AcceptDialog/font_sizes/title_font_size = 16
+
+[sub_resource type="GDScript" id="GDScript_d4hu8"]
+resource_name = "confirmreset"
+script/source = "extends ConfirmationDialog
+
+func _yes():
+	Root.resetdata()
+	visible=false
+func _no():
+	visible=false
+#func _seet():
+	#position=Vector2(-200,-150)
+func _ready() -> void:
+	#_seet()
+	#visibility_changed.connect(_seet)
+	canceled.connect(_no)
+	confirmed.connect(_yes)
+"
+
+[sub_resource type="GDScript" id="GDScript_p1nwe"]
+resource_name = "ruflag"
+script/source = "extends TextureButton
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	pressed.connect(_onpress)
+
+func _onpress():
+	get_parent().visible=false
+	get_parent().get_parent().get_node(\"mainbuttons\").visible=true
+	TranslationServer.set_locale(name)
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta: float) -> void:
+	pass
+"
+
+[sub_resource type="GDScript" id="GDScript_prbor"]
+resource_name = "exitlist"
+script/source = "extends Button
+
+func _pressed() -> void:
+	get_parent().get_parent().visible=false
+	get_parent().get_parent().get_parent().get_node(\"mainbuttons\").visible=true
+"
+
+[sub_resource type="GDScript" id="GDScript_gdhp0"]
+resource_name = "exitlist"
+script/source = "extends Button
+
+func _pressed() -> void:
+	get_parent().get_parent().visible=false
+	get_parent().get_parent().get_parent().get_node(\"mainbuttons\").visible=true
+"
+
+[node name="MainMenu" type="Node2D" unique_id=737768645]
+script = SubResource("GDScript_3rkf3")
+
+[node name="spawn" type="Marker2D" parent="." unique_id=551570354]
+position = Vector2(0, -161)
+gizmo_extents = 118.1
+
+[node name="level_list" type="ItemList" parent="." unique_id=190332397]
+visible = false
+z_index = 4096
+offset_left = -200.0
+offset_top = -200.0
+offset_right = 200.0
+offset_bottom = 200.0
+item_count = 15
+same_column_width = true
+fixed_column_width = 150
+icon_scale = 0.2
+item_0/text = "1"
+item_1/text = "2"
+item_2/text = "3"
+item_3/text = "4"
+item_4/text = "5"
+item_5/text = "6"
+item_6/text = "7"
+item_7/text = "8"
+item_8/text = "9"
+item_9/text = "10"
+item_10/text = "11"
+item_11/text = "12"
+item_12/text = "13"
+item_13/text = "14"
+item_14/text = "15"
+script = SubResource("GDScript_xn6kt")
+
+[node name="exit_list_button" type="ColorRect" parent="." unique_id=1052536621]
+visible = false
+offset_left = -400.0
+offset_top = 150.0
+offset_right = -200.0
+offset_bottom = 190.0
+color = Color(0.112325, 0.526447, 0.402977, 1)
+
+[node name="Button" type="Button" parent="exit_list_button" unique_id=768717319]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("2_247la")
+theme_override_font_sizes/font_size = 25
+text = "MENU_BACK"
+flat = true
+script = SubResource("GDScript_247la")
+
+[node name="mainbuttons" type="Control" parent="." unique_id=1013339234]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="playrect" type="ColorRect" parent="mainbuttons" unique_id=1422197161]
+layout_mode = 0
+offset_left = -200.0
+offset_top = -125.0
+offset_right = 200.0
+offset_bottom = -85.0
+color = Color(0.112325, 0.526447, 0.402977, 1)
+
+[node name="Button" type="Button" parent="mainbuttons/playrect" unique_id=688626291]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("2_247la")
+theme_override_font_sizes/font_size = 25
+text = "MENU_PLAY"
+flat = true
+script = SubResource("GDScript_hj162")
+
+[node name="levelsrect" type="ColorRect" parent="mainbuttons" unique_id=1801411485]
+layout_mode = 0
+offset_left = -200.0
+offset_top = -75.0
+offset_right = 200.0
+offset_bottom = -35.0
+color = Color(0.112325, 0.526447, 0.402977, 1)
+
+[node name="Button" type="Button" parent="mainbuttons/levelsrect" unique_id=1692280727]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("2_247la")
+theme_override_font_sizes/font_size = 25
+text = "MENU_LEVELS"
+flat = true
+script = SubResource("GDScript_nl8w3")
+
+[node name="clevelsrect" type="ColorRect" parent="mainbuttons" unique_id=1463579495]
+layout_mode = 0
+offset_left = -200.0
+offset_top = -25.0
+offset_right = 200.0
+offset_bottom = 15.0
+color = Color(0.112325, 0.526447, 0.402977, 1)
+
+[node name="Button" type="Button" parent="mainbuttons/clevelsrect" unique_id=60637662]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("2_247la")
+theme_override_font_sizes/font_size = 25
+text = "MENU_CUSTOM_LEVELS"
+flat = true
+script = SubResource("GDScript_27h4x")
+
+[node name="localerect" type="ColorRect" parent="mainbuttons" unique_id=317648692]
+layout_mode = 0
+offset_left = -200.0
+offset_top = 25.0
+offset_right = 200.0
+offset_bottom = 65.0
+color = Color(0.112325, 0.526447, 0.402977, 1)
+
+[node name="Button" type="Button" parent="mainbuttons/localerect" unique_id=1882299979]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("2_247la")
+theme_override_font_sizes/font_size = 25
+text = "      Язык | Language"
+flat = true
+script = SubResource("GDScript_bbqo6")
+
+[node name="exitrect" type="ColorRect" parent="mainbuttons" unique_id=1704262145]
+layout_mode = 0
+offset_left = -200.0
+offset_top = 75.0
+offset_right = 200.0
+offset_bottom = 115.0
+color = Color(0.112325, 0.526447, 0.402977, 1)
+
+[node name="Button" type="Button" parent="mainbuttons/exitrect" unique_id=1641832178]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("2_247la")
+theme_override_font_sizes/font_size = 25
+text = "MENU_EXIT"
+flat = true
+script = SubResource("GDScript_kiqgm")
+
+[node name="accrect" type="ColorRect" parent="mainbuttons" unique_id=554073226]
+visible = false
+layout_mode = 0
+offset_left = -200.0
+offset_top = 75.0
+offset_right = 200.0
+offset_bottom = 115.0
+color = Color(0.112325, 0.526447, 0.402977, 1)
+
+[node name="Button" type="Button" parent="mainbuttons/accrect" unique_id=2098076031]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("2_247la")
+theme_override_font_sizes/font_size = 25
+text = "Аккаунт"
+flat = true
+script = SubResource("GDScript_isoef")
+
+[node name="vk" type="TextureButton" parent="mainbuttons" unique_id=560643936]
+layout_mode = 0
+offset_left = -20.0
+offset_top = 130.0
+offset_right = 20.0
+offset_bottom = 170.0
+texture_normal = ExtResource("7_1k4da")
+ignore_texture_size = true
+stretch_mode = 0
+script = ExtResource("5_qgo02")
+
+[node name="dalerts" type="TextureButton" parent="mainbuttons" unique_id=484657578]
+layout_mode = 0
+offset_left = -50.0
+offset_top = 180.0
+offset_right = -10.0
+offset_bottom = 220.0
+texture_normal = ExtResource("6_1k4da")
+ignore_texture_size = true
+stretch_mode = 0
+script = ExtResource("5_qgo02")
+
+[node name="boosty" type="TextureButton" parent="mainbuttons" unique_id=1314491422]
+layout_mode = 0
+offset_left = 10.0
+offset_top = 180.0
+offset_right = 50.0
+offset_bottom = 220.0
+texture_normal = ExtResource("7_bbqo6")
+ignore_texture_size = true
+stretch_mode = 0
+script = ExtResource("5_qgo02")
+
+[node name="telegram" type="TextureButton" parent="mainbuttons" unique_id=721707867]
+layout_mode = 0
+offset_left = -70.0
+offset_top = 130.0
+offset_right = -30.0
+offset_bottom = 170.0
+texture_normal = ExtResource("4_isoef")
+ignore_texture_size = true
+stretch_mode = 0
+script = ExtResource("5_qgo02")
+
+[node name="rustore" type="TextureButton" parent="mainbuttons" unique_id=2087738083]
+layout_mode = 0
+offset_left = 30.0
+offset_top = 130.0
+offset_right = 70.0
+offset_bottom = 170.0
+texture_normal = ExtResource("6_vovv2")
+ignore_texture_size = true
+stretch_mode = 0
+script = ExtResource("5_qgo02")
+
+[node name="reset" type="ColorRect" parent="mainbuttons" unique_id=331082259]
+layout_mode = 1
+anchors_preset = -1
+offset_left = -274.0
+offset_top = -25.0
+offset_right = -234.0
+offset_bottom = 15.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(1, 0, 0, 1)
+
+[node name="btn" type="TextureButton" parent="mainbuttons/reset" unique_id=59797805]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+texture_normal = ExtResource("8_1k4da")
+ignore_texture_size = true
+stretch_mode = 0
+script = SubResource("GDScript_1k4da")
+
+[node name="AccountMenuGroup" type="Control" parent="." unique_id=406765976]
+visible = false
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="uprin" type="Panel" parent="AccountMenuGroup" unique_id=2054878367]
+visible = false
+layout_mode = 0
+offset_left = -230.0
+offset_top = -200.0
+offset_right = 270.0
+offset_bottom = 300.0
+
+[node name="loginrect" type="ColorRect" parent="AccountMenuGroup/uprin" unique_id=1291422451]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+offset_top = 200.0
+offset_bottom = 250.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.112325, 0.526447, 0.402977, 1)
+
+[node name="Button" type="Button" parent="AccountMenuGroup/uprin/loginrect" unique_id=765996826]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("2_247la")
+theme_override_font_sizes/font_size = 25
+text = "Войти в аккаунт"
+flat = true
+
+[node name="regrect" type="ColorRect" parent="AccountMenuGroup/uprin" unique_id=731355240]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+offset_top = 270.0
+offset_bottom = 320.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.112325, 0.526447, 0.402977, 1)
+
+[node name="Button" type="Button" parent="AccountMenuGroup/uprin/regrect" unique_id=1051991771]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("2_247la")
+theme_override_font_sizes/font_size = 25
+text = "Создать аккаунт"
+flat = true
+
+[node name="helprect" type="ColorRect" parent="AccountMenuGroup/uprin" unique_id=967633857]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+offset_top = 340.0
+offset_bottom = 390.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.112325, 0.526447, 0.402977, 1)
+
+[node name="Button" type="Button" parent="AccountMenuGroup/uprin/helprect" unique_id=522684771]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("2_247la")
+theme_override_font_sizes/font_size = 25
+text = "Помощь и правила"
+flat = true
+
+[node name="exitrect" type="ColorRect" parent="AccountMenuGroup/uprin" unique_id=1605273981]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+offset_top = 410.0
+offset_bottom = 460.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.112325, 0.526447, 0.402977, 1)
+
+[node name="Button" type="Button" parent="AccountMenuGroup/uprin/exitrect" unique_id=1132438589]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("2_247la")
+theme_override_font_sizes/font_size = 25
+text = "Назад"
+flat = true
+script = SubResource("GDScript_qgo02")
+
+[node name="Label" type="Label" parent="AccountMenuGroup/uprin" unique_id=1017027613]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 23.0
+grow_horizontal = 2
+theme_override_fonts/font = ExtResource("2_3rkf3")
+theme_override_font_sizes/font_size = 40
+text = "Использовать систему аккаунтов"
+horizontal_alignment = 1
+
+[node name="regrect" type="Panel" parent="AccountMenuGroup" unique_id=841638942]
+layout_mode = 0
+offset_left = -230.0
+offset_top = -200.0
+offset_right = 270.0
+offset_bottom = 300.0
+
+[node name="okrect" type="ColorRect" parent="AccountMenuGroup/regrect" unique_id=1225880323]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+offset_top = 340.0
+offset_bottom = 390.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.112325, 0.526447, 0.402977, 1)
+
+[node name="Button" type="Button" parent="AccountMenuGroup/regrect/okrect" unique_id=1413329691]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("2_247la")
+theme_override_font_sizes/font_size = 25
+text = "Принять правила и зарегистрироватся"
+flat = true
+
+[node name="exitrect" type="ColorRect" parent="AccountMenuGroup/regrect" unique_id=551815680]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+offset_top = 410.0
+offset_bottom = 460.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.112325, 0.526447, 0.402977, 1)
+
+[node name="Button" type="Button" parent="AccountMenuGroup/regrect/exitrect" unique_id=585715530]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("2_247la")
+theme_override_font_sizes/font_size = 25
+text = "Назад"
+flat = true
+script = SubResource("GDScript_qgo02")
+
+[node name="Label" type="Label" parent="AccountMenuGroup/regrect" unique_id=786762945]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 23.0
+grow_horizontal = 2
+theme_override_fonts/font = ExtResource("2_3rkf3")
+theme_override_font_sizes/font_size = 40
+text = "Регистрация"
+horizontal_alignment = 1
+
+[node name="email" type="LineEdit" parent="AccountMenuGroup/regrect" unique_id=1995653282]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+offset_top = 100.0
+offset_bottom = 150.0
+grow_horizontal = 2
+theme_override_fonts/font = ExtResource("3_247la")
+placeholder_text = "Эллектронная почта"
+emoji_menu_enabled = false
+clear_button_enabled = true
+
+[node name="password" type="LineEdit" parent="AccountMenuGroup/regrect" unique_id=1478801032]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+offset_top = 160.0
+offset_bottom = 210.0
+grow_horizontal = 2
+theme_override_fonts/font = ExtResource("3_247la")
+placeholder_text = "Пароль"
+emoji_menu_enabled = false
+clear_button_enabled = true
+secret = true
+
+[node name="confirm_reset" type="ConfirmationDialog" parent="." unique_id=2052153122]
+disable_3d = true
+oversampling_override = 1.0
+title = "MENU_SURE"
+position = Vector2i(0, 36)
+size = Vector2i(400, 300)
+theme = SubResource("Theme_bbqo6")
+ok_button_text = "MENU_YES"
+dialog_text = "MENU_RESET_CONFIRM_LABEL"
+dialog_autowrap = true
+cancel_button_text = "MENU_NO"
+script = SubResource("GDScript_d4hu8")
+
+[node name="Button" type="Button" parent="." unique_id=1082809276]
+visible = false
+offset_left = 100.0
+offset_top = 130.0
+offset_right = 173.0
+offset_bottom = 207.0
+theme_override_font_sizes/font_size = 50
+text = "🌐"
+flat = true
+
+[node name="locale" type="ColorRect" parent="." unique_id=2033823275]
+visible = false
+offset_left = -300.0
+offset_top = -150.0
+offset_right = 300.0
+offset_bottom = 250.0
+color = Color(0, 0, 0, 0.39215687)
+
+[node name="ru" type="TextureButton" parent="locale" unique_id=1983977604]
+layout_mode = 0
+offset_left = 78.0
+offset_top = 102.0
+offset_right = 230.0
+offset_bottom = 197.0
+texture_normal = ExtResource("11_d4hu8")
+ignore_texture_size = true
+stretch_mode = 0
+script = SubResource("GDScript_p1nwe")
+
+[node name="en" type="TextureButton" parent="locale" unique_id=1347096552]
+layout_mode = 0
+offset_left = 370.0
+offset_top = 102.0
+offset_right = 522.0
+offset_bottom = 197.0
+texture_normal = ExtResource("12_p1nwe")
+ignore_texture_size = true
+stretch_mode = 0
+script = SubResource("GDScript_p1nwe")
+
+[node name="clevels" type="ColorRect" parent="." unique_id=22270258]
+visible = false
+anchors_preset = -1
+offset_left = -260.0
+offset_top = -160.0
+offset_right = 260.0
+offset_bottom = 160.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.654902)
+
+[node name="Label" type="Label" parent="clevels" unique_id=707177786]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 23.0
+grow_horizontal = 2
+theme_override_fonts/font = ExtResource("13_prbor")
+theme_override_font_sizes/font_size = 20
+text = "MENU_CUSTOM_LEVELS"
+horizontal_alignment = 1
+text_overrun_behavior = 1
+
+[node name="ItemList" type="ItemList" parent="clevels" unique_id=1941857424]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 26.0
+offset_bottom = -40.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="exit_button" type="ColorRect" parent="clevels" unique_id=1161617133]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -80.0
+offset_top = -40.0
+offset_right = 80.0
+grow_horizontal = 2
+grow_vertical = 0
+color = Color(0.112325, 0.526447, 0.402977, 1)
+
+[node name="Button" type="Button" parent="clevels/exit_button" unique_id=1535490752]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("14_27h4x")
+theme_override_font_sizes/font_size = 25
+text = "MENU_BACK"
+flat = true
+script = SubResource("GDScript_prbor")
+
+[node name="add_button" type="ColorRect" parent="clevels" unique_id=1471500387]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -40.0
+offset_right = 170.0
+grow_vertical = 0
+color = Color(0.112325, 0.526447, 0.402977, 1)
+
+[node name="Button" type="Button" parent="clevels/add_button" unique_id=654205391]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("14_27h4x")
+theme_override_font_sizes/font_size = 25
+text = "MENU_ADD"
+flat = true
+script = SubResource("GDScript_gdhp0")

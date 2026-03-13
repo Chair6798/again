@@ -1,0 +1,69 @@
+[gd_scene format=3 uid="uid://bbcv3qvipuie0"]
+
+[ext_resource type="Script" uid="uid://cjhld0rml0bxy" path="res://scripts/game/level/level.gd" id="1_iqqfa"]
+[ext_resource type="FontFile" uid="uid://kxhpq6ui7jpj" path="res://fonts/Caveat/Caveat-VariableFont_wght.ttf" id="2_a2g0w"]
+[ext_resource type="FontFile" uid="uid://da35q26unljcs" path="res://fonts/Oswald/Oswald-VariableFont_wght.ttf" id="2_ujt86"]
+
+[sub_resource type="GDScript" id="GDScript_iqqfa"]
+resource_name = "asdasdasd"
+script/source = "extends Button
+
+func _onpressed() -> void:
+	print(1)
+	Root.load_menu_level()
+
+func _ready() -> void:
+	print(\"READY\")
+	pressed.connect(_onpressed)
+"
+
+[node name="Node2D" type="Node2D" unique_id=795897689]
+script = ExtResource("1_iqqfa")
+
+[node name="spawn" type="Marker2D" parent="." unique_id=1281161363]
+position = Vector2(0, -1231)
+gizmo_extents = 118.1
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=1121360662]
+z_index = -100
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -1500.0
+offset_top = -1000.0
+offset_right = 1500.0
+offset_bottom = 1000.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.16924527, 0.1692453, 0.16924527, 1)
+
+[node name="Label" type="Label" parent="." unique_id=812574192]
+z_index = -100
+offset_left = -203.0
+offset_top = -339.0
+offset_right = 189.0
+offset_bottom = 252.0
+theme_override_fonts/font = ExtResource("2_a2g0w")
+theme_override_font_sizes/font_size = 30
+text = "LEVELFINISH"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="Button" type="Button" parent="." unique_id=756653036]
+z_index = -100
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -100.0
+offset_top = 150.0
+offset_right = 100.0
+offset_bottom = 196.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("2_ujt86")
+theme_override_font_sizes/font_size = 25
+text = "MENU_TOMENU"
+script = SubResource("GDScript_iqqfa")
+metadata/_edit_use_anchors_ = true

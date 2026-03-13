@@ -1,0 +1,209 @@
+[gd_scene format=3 uid="uid://coecrfqmxkqmf"]
+
+[ext_resource type="Texture2D" uid="uid://cwu3psy7kmg5l" path="res://texture/bg/lines.jpg" id="2_6wnbf"]
+[ext_resource type="Script" uid="uid://b1f603623fmc2" path="res://scripts/game/level/level_changer.gd" id="3_0x4v3"]
+[ext_resource type="Script" uid="uid://hi8jlj3rs31v" path="res://scripts/game/level/button.gd" id="4_6mgqd"]
+[ext_resource type="Texture2D" uid="uid://clwumt70u7rbu" path="res://texture/assets/cube.png" id="5_6vd6d"]
+[ext_resource type="Script" uid="uid://bqriteg1ef2vw" path="res://scripts/game/level/spike.gd" id="5_6wnbf"]
+
+[sub_resource type="GDScript" id="GDScript_hdnc8"]
+resource_name = "level"
+script/source = "extends \"res://scripts/game/level/level.gd\"
+
+func _ready() -> void:
+	super._ready()
+	Root.player.gravity=200
+"
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_amk87"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0l062"]
+size = Vector2(200, 1050.13)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dd0lh"]
+size = Vector2(50, 1000)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ok6xr"]
+size = Vector2(160, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_niitk"]
+size = Vector2(140, 9)
+
+[sub_resource type="GDScript" id="GDScript_niitk"]
+resource_name = "dadsad"
+script/source = "extends \"res://scripts/game/level/door.gd\"
+
+func use_end():
+	pass
+"
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_d5djh"]
+size = Vector2(40, 200)
+
+[sub_resource type="GDScript" id="GDScript_6wnbf"]
+resource_name = "moveblock"
+script/source = "extends StaticBody2D
+
+var speed = 50
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	pass # Replace with function body.
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta: float) -> void:
+	position.x+=delta*speed
+	if position.x>=830:
+		position.x=-830
+"
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_iyknm"]
+size = Vector2(400, 100)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0x4v3"]
+size = Vector2(1000, 60)
+
+[node name="Level2" type="Node2D" unique_id=289302698]
+script = SubResource("GDScript_hdnc8")
+
+[node name="floor" type="StaticBody2D" parent="." unique_id=111737214]
+position = Vector2(-3, 389)
+
+[node name="body" type="Sprite2D" parent="floor" unique_id=315214531]
+modulate = Color(0, 1, 0, 1)
+z_index = 5
+texture = ExtResource("2_6wnbf")
+region_enabled = true
+region_rect = Rect2(0, 0, 2000, 300)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="floor" unique_id=1414221271]
+z_index = 4096
+position = Vector2(0, -149)
+shape = SubResource("WorldBoundaryShape2D_amk87")
+
+[node name="wall_left" type="StaticBody2D" parent="." unique_id=667915809]
+position = Vector2(-584, -481)
+
+[node name="body" type="Sprite2D" parent="wall_left" unique_id=1158013106]
+modulate = Color(0, 1, 0, 1)
+z_index = 5
+rotation = 1.5708
+texture = ExtResource("2_6wnbf")
+region_enabled = true
+region_rect = Rect2(0, 0, 1050.13, 300)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="wall_left" unique_id=2042475500]
+z_index = 4096
+position = Vector2(51, 0)
+shape = SubResource("RectangleShape2D_0l062")
+
+[node name="wall_right" type="StaticBody2D" parent="." unique_id=847175896]
+position = Vector2(584, -481)
+rotation = -3.14159
+
+[node name="body" type="Sprite2D" parent="wall_right" unique_id=753401218]
+modulate = Color(0, 1, 0, 1)
+z_index = 5
+rotation = 1.5708
+texture = ExtResource("2_6wnbf")
+region_enabled = true
+region_rect = Rect2(0, 0, 1050.13, 300)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="wall_right" unique_id=1983030408]
+z_index = 4096
+position = Vector2(51, 0)
+shape = SubResource("RectangleShape2D_0l062")
+
+[node name="LevelChanger" type="Area2D" parent="." unique_id=1392237085]
+position = Vector2(656, 39)
+disable_mode = 1
+monitorable = false
+script = ExtResource("3_0x4v3")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LevelChanger" unique_id=1003183327]
+z_index = 4096
+shape = SubResource("RectangleShape2D_dd0lh")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=2127548502]
+position = Vector2(-669, 0)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" unique_id=2017289802]
+z_index = 4096
+shape = SubResource("RectangleShape2D_dd0lh")
+
+[node name="spawn" type="Marker2D" parent="." unique_id=629364502]
+position = Vector2(-522, 152)
+
+[node name="Label" type="Label" parent="." unique_id=1471125635]
+offset_left = 316.0
+offset_top = 175.0
+offset_right = 950.0
+offset_bottom = 492.0
+rotation = 3.1415927
+theme_override_font_sizes/font_size = 115
+text = "LEVEL18"
+horizontal_alignment = 1
+
+[node name="Button" type="StaticBody2D" parent="." unique_id=784752636 node_paths=PackedStringArray("ConnectedObject")]
+position = Vector2(0, 231)
+script = ExtResource("4_6mgqd")
+ConnectedObject = NodePath("../Door")
+
+[node name="Sprite2D" type="Sprite2D" parent="Button" unique_id=1017702077]
+modulate = Color(0, 0, 0, 1)
+scale = Vector2(0.4, 0.04)
+texture = ExtResource("5_6vd6d")
+
+[node name="Sprite2D2" type="Sprite2D" parent="Button" unique_id=1793370443]
+modulate = Color(1, 0, 0, 1)
+z_index = -1
+position = Vector2(0, -9)
+scale = Vector2(0.35, 0.03)
+texture = ExtResource("5_6vd6d")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Button" unique_id=1286500011]
+z_index = 4096
+shape = SubResource("RectangleShape2D_ok6xr")
+
+[node name="collider" type="Area2D" parent="Button" unique_id=1768939175]
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Button/collider" unique_id=1168318852]
+z_index = 4096
+position = Vector2(0, -12.5)
+shape = SubResource("RectangleShape2D_niitk")
+
+[node name="Door" type="StaticBody2D" parent="." unique_id=1989489884]
+modulate = Color(0.133196, 0.133196, 0.133196, 1)
+position = Vector2(491, 141)
+script = SubResource("GDScript_niitk")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Door" unique_id=1952702503]
+z_index = 4096
+shape = SubResource("RectangleShape2D_d5djh")
+
+[node name="Sprite2D" type="Sprite2D" parent="Door" unique_id=1784183510]
+z_index = -10
+scale = Vector2(0.1, 0.5)
+texture = ExtResource("5_6vd6d")
+
+[node name="StaticBody2D2" type="StaticBody2D" parent="." unique_id=627081789]
+position = Vector2(0, -200)
+script = SubResource("GDScript_6wnbf")
+
+[node name="body" type="Sprite2D" parent="StaticBody2D2" unique_id=1139148487]
+modulate = Color(0, 1, 0, 1)
+z_index = 5
+texture = ExtResource("2_6wnbf")
+region_enabled = true
+region_rect = Rect2(0, 0, 398.22125, 102.18887)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D2" unique_id=1122172989]
+shape = SubResource("RectangleShape2D_iyknm")
+
+[node name="kill" type="Area2D" parent="." unique_id=1662210625]
+position = Vector2(0, -645)
+priority = 1
+script = ExtResource("5_6wnbf")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="kill" unique_id=1911442367]
+shape = SubResource("RectangleShape2D_0x4v3")

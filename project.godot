@@ -1,0 +1,60 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=5
+
+[GD-Sync]
+
+version="0.13"
+publicKey="f7658dfa48afb0af"
+privateKey="7fdc02ca446f8959"
+
+[animation]
+
+compatibility/default_parent_skeleton_in_mesh_instance_3d=true
+
+[application]
+
+config/name="Again"
+run/main_scene="uid://cxuhl1e2f746m"
+config/features=PackedStringArray("4.6", "GL Compatibility")
+boot_splash/stretch_mode=3
+boot_splash/image="uid://ddq6j4kusre2n"
+config/icon="uid://bvg2cu04j3ie8"
+
+[autoload]
+
+UserInput="*res://scripts/globals/user_input.gd"
+lib="*res://scripts/globals/lib.gd"
+Root="*res://scripts/globals/root.gd"
+CustomLevelLoader="*uid://c0up7tteddor8"
+
+[dotnet]
+
+project/assembly_name="Again"
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/NotificationSchedulerPlugin/plugin.cfg")
+
+[input_devices]
+
+pointing/emulate_touch_from_mouse=true
+
+[internationalization]
+
+locale/translations=PackedStringArray("res://localization/Локализация для Again - Лист1.en.translation", "res://localization/Локализация для Again - Лист1.ru.translation")
+locale/translations_pot_files=PackedStringArray("res://scenes/levels/level1.tscn", "res://scenes/levels/level2.tscn", "res://scenes/levels/level3.tscn", "res://scenes/levels/level4.tscn", "res://scenes/levels/level5.tscn", "res://scenes/levels/level6.tscn", "res://scenes/levels/level7.tscn")
+locale/translation_add_builtin_strings_to_pot=true
+locale/locale_filter_mode=1
+
+[rendering]
+
+renderer/rendering_method="gl_compatibility"
+renderer/rendering_method.mobile="gl_compatibility"
+textures/vram_compression/import_etc2_astc=true

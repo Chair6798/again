@@ -1,0 +1,345 @@
+[gd_scene format=3 uid="uid://c3msfacux4g3n"]
+
+[ext_resource type="Script" uid="uid://cjhld0rml0bxy" path="res://scripts/game/level/level.gd" id="1_es4ea"]
+[ext_resource type="Texture2D" uid="uid://cwu3psy7kmg5l" path="res://texture/bg/lines.jpg" id="2_blmkr"]
+[ext_resource type="Script" uid="uid://b1f603623fmc2" path="res://scripts/game/level/level_changer.gd" id="3_fxbhd"]
+[ext_resource type="FontFile" uid="uid://bxfm6jr5po0hn" path="res://fonts/Intel_One_Mono/IntelOneMono-VariableFont_wght.ttf" id="4_blmkr"]
+[ext_resource type="Texture2D" uid="uid://clwumt70u7rbu" path="res://texture/assets/cube.png" id="5_j12ka"]
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_amk87"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0l062"]
+size = Vector2(200, 1050.13)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dd0lh"]
+size = Vector2(50, 1000)
+
+[sub_resource type="GDScript" id="GDScript_fxbhd"]
+resource_name = "cbutton"
+script/source = "extends StaticBody2D
+
+@export var ConnectedObject:Node
+
+@export var enabled = true:
+	set(value):
+		if enabled!=value:
+			enabled=value
+
+signal down
+
+signal up
+
+@export var pressed = false:
+	set(value):
+		if pressed==value:
+			return
+		pressed=value
+		if pressed:
+			down.emit()
+		else:
+			up.emit()
+
+var collided = 0
+
+func _down():
+	get_parent().get_parent().get_node(\"Audio\").get_node(\"Button\").play()
+	$Sprite2D2.position=Vector2(0,0)
+	down.emit()
+
+func _up():
+	get_parent().get_parent().get_node(\"Audio\").get_node(\"Button\").play()
+	$Sprite2D2.position=Vector2(0,-9)
+	up.emit()
+func _entered(body):
+	if not enabled:
+		return
+	
+	if get_parent().is_ready==false:
+		return
+	if (body is CharacterBody2D)  or (body is RigidBody2D):
+		collided+=1
+		_down()
+
+func _leaved(body):
+	if not enabled:
+		return
+	
+	if get_parent().is_ready==false:
+		return
+	if (body is CharacterBody2D)  or (body is RigidBody2D):
+		collided-=1
+		if collided==0:
+			_up()
+
+func _ready() -> void:
+	get_node(\"collider\").body_entered.connect(_entered)
+	get_node(\"collider\").body_exited.connect(_leaved)
+"
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ok6xr"]
+size = Vector2(160, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_niitk"]
+size = Vector2(140, 9)
+
+[sub_resource type="GDScript" id="GDScript_niitk"]
+resource_name = "dadsad"
+script/source = "extends \"res://scripts/game/level/door.gd\"
+
+func use_end():
+	pass
+"
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_d5djh"]
+size = Vector2(40, 200)
+
+[sub_resource type="GDScript" id="GDScript_es4ea"]
+resource_name = "saimonscript"
+script/source = "extends Node
+
+@onready var saimonsay:Label = get_parent().get_node(\"saimsay\")
+@onready var areaEffect:Sprite2D = get_parent().get_node(\"areae\")
+@export var button_left:StaticBody2D
+@export var button_right:StaticBody2D
+signal sited
+
+func _cycle():
+	pass
+
+func _ready() -> void:
+	await sited
+	Root.pcontrol=false
+	Root.player.position=areaEffect.position
+	areaEffect.visible=false
+	saimonsay.text=\"\"
+	await get_tree().create_timer(1).timeout
+	Root.pcontrol=true
+	button_left.position.y=230
+	button_right.position.y=230
+	var rnd = randi_range(1,2)
+	if rnd==1:
+		saimonsay.text=\"LEVEL13R\"
+		await button_right.down
+	if rnd==2:
+		saimonsay.text=\"LEVEL13L\"
+		await button_left.down
+	button_left.position.y=260
+	button_right.position.y=260
+	get_parent().get_node(\"Door\").use_start()
+"
+
+[sub_resource type="GDScript" id="GDScript_blmkr"]
+resource_name = "areaanim"
+script/source = "extends Sprite2D
+var cycle=true
+var _a = false
+func _ready() -> void:
+	while cycle:
+		if _a:
+			var t = create_tween()
+			t.tween_property(self,\"modulate\",Color(1.0, 1.0, 0.0, 1.0),1)
+			_a=false
+		else:
+			var t = create_tween()
+			t.tween_property(self,\"modulate\",Color(1.0, 1.0, 0.0, 0.0),1)
+			_a=true
+		await get_tree().create_timer(1).timeout
+func _exit_tree() -> void:
+	cycle=false
+"
+
+[sub_resource type="GDScript" id="GDScript_b1jq7"]
+resource_name = "saimonarea"
+script/source = "extends Area2D
+
+func _body_e(body):
+	if body==get_node(\"/root/Game/Flat/Player\"):
+		get_parent().get_node(\"saimon\").sited.emit()
+func _body_l(body):
+	pass
+func _ready() -> void:
+	body_entered.connect(_body_e)
+	body_exited.connect(_body_l)
+"
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_j12ka"]
+
+[node name="Level2" type="Node2D" unique_id=1836365807]
+script = ExtResource("1_es4ea")
+
+[node name="floor" type="StaticBody2D" parent="." unique_id=630727304]
+position = Vector2(-3, 389)
+
+[node name="body" type="Sprite2D" parent="floor" unique_id=958256145]
+modulate = Color(0, 1, 0, 1)
+z_index = 5
+texture = ExtResource("2_blmkr")
+region_enabled = true
+region_rect = Rect2(0, 0, 2000, 300)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="floor" unique_id=1178585555]
+z_index = 4096
+position = Vector2(0, -149)
+shape = SubResource("WorldBoundaryShape2D_amk87")
+
+[node name="wall_left" type="StaticBody2D" parent="." unique_id=1436404474]
+position = Vector2(-584, -481)
+
+[node name="body" type="Sprite2D" parent="wall_left" unique_id=438234051]
+modulate = Color(0, 1, 0, 1)
+z_index = 5
+rotation = 1.5708
+texture = ExtResource("2_blmkr")
+region_enabled = true
+region_rect = Rect2(0, 0, 1050.13, 300)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="wall_left" unique_id=1854932528]
+z_index = 4096
+position = Vector2(51, 0)
+shape = SubResource("RectangleShape2D_0l062")
+
+[node name="wall_right" type="StaticBody2D" parent="." unique_id=1081361485]
+position = Vector2(584, -481)
+rotation = -3.14159
+
+[node name="body" type="Sprite2D" parent="wall_right" unique_id=833114596]
+modulate = Color(0, 1, 0, 1)
+z_index = 5
+rotation = 1.5708
+texture = ExtResource("2_blmkr")
+region_enabled = true
+region_rect = Rect2(0, 0, 1050.13, 300)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="wall_right" unique_id=2023452162]
+z_index = 4096
+position = Vector2(51, 0)
+shape = SubResource("RectangleShape2D_0l062")
+
+[node name="LevelChanger" type="Area2D" parent="." unique_id=191611327]
+position = Vector2(656, 39)
+disable_mode = 1
+monitorable = false
+script = ExtResource("3_fxbhd")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LevelChanger" unique_id=1793045771]
+z_index = 4096
+shape = SubResource("RectangleShape2D_dd0lh")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=729725817]
+position = Vector2(-669, 0)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" unique_id=1826747738]
+z_index = 4096
+shape = SubResource("RectangleShape2D_dd0lh")
+
+[node name="spawn" type="Marker2D" parent="." unique_id=1970655026]
+position = Vector2(-522, 152)
+
+[node name="Label" type="Label" parent="." unique_id=1544675985]
+offset_left = -400.0
+offset_top = -201.0
+offset_right = 400.0
+offset_bottom = 116.0
+theme_override_font_sizes/font_size = 80
+text = "LEVEL13"
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="saimsay" type="Label" parent="." unique_id=126866778]
+offset_left = -400.0
+offset_top = -21.0
+offset_right = 400.0
+offset_bottom = 296.0
+theme_override_fonts/font = ExtResource("4_blmkr")
+theme_override_font_sizes/font_size = 80
+text = "..."
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="ButtonR" type="StaticBody2D" parent="." unique_id=1772127365]
+position = Vector2(300, 260)
+script = SubResource("GDScript_fxbhd")
+
+[node name="Sprite2D" type="Sprite2D" parent="ButtonR" unique_id=470688905]
+modulate = Color(0, 0, 0, 1)
+scale = Vector2(0.4, 0.04)
+texture = ExtResource("5_j12ka")
+
+[node name="Sprite2D2" type="Sprite2D" parent="ButtonR" unique_id=4705437]
+modulate = Color(1, 0, 0, 1)
+z_index = -1
+position = Vector2(0, -9)
+scale = Vector2(0.35, 0.03)
+texture = ExtResource("5_j12ka")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ButtonR" unique_id=1559250665]
+z_index = 4096
+shape = SubResource("RectangleShape2D_ok6xr")
+
+[node name="collider" type="Area2D" parent="ButtonR" unique_id=1273270352]
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="ButtonR/collider" unique_id=903330772]
+z_index = 4096
+position = Vector2(0, -12.5)
+shape = SubResource("RectangleShape2D_niitk")
+
+[node name="ButtonL" type="StaticBody2D" parent="." unique_id=1469950235 node_paths=PackedStringArray("ConnectedObject")]
+position = Vector2(-300, 260)
+script = SubResource("GDScript_fxbhd")
+ConnectedObject = NodePath("../Door")
+
+[node name="Sprite2D" type="Sprite2D" parent="ButtonL" unique_id=2058265714]
+modulate = Color(0, 0, 0, 1)
+scale = Vector2(0.4, 0.04)
+texture = ExtResource("5_j12ka")
+
+[node name="Sprite2D2" type="Sprite2D" parent="ButtonL" unique_id=2013777500]
+modulate = Color(0, 0, 1, 1)
+z_index = -1
+position = Vector2(0, -9)
+scale = Vector2(0.35, 0.03)
+texture = ExtResource("5_j12ka")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ButtonL" unique_id=303041625]
+z_index = 4096
+shape = SubResource("RectangleShape2D_ok6xr")
+
+[node name="collider" type="Area2D" parent="ButtonL" unique_id=114760364]
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="ButtonL/collider" unique_id=1005052729]
+z_index = 4096
+position = Vector2(0, -12.5)
+shape = SubResource("RectangleShape2D_niitk")
+
+[node name="Door" type="StaticBody2D" parent="." unique_id=1750340723]
+modulate = Color(0.133196, 0.133196, 0.133196, 1)
+position = Vector2(491, 141)
+script = SubResource("GDScript_niitk")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Door" unique_id=1522076847]
+z_index = 4096
+shape = SubResource("RectangleShape2D_d5djh")
+
+[node name="Sprite2D" type="Sprite2D" parent="Door" unique_id=420146977]
+z_index = -10
+scale = Vector2(0.1, 0.5)
+texture = ExtResource("5_j12ka")
+
+[node name="saimon" type="Node" parent="." unique_id=1703313294 node_paths=PackedStringArray("button_left", "button_right")]
+script = SubResource("GDScript_es4ea")
+button_left = NodePath("../ButtonL")
+button_right = NodePath("../ButtonR")
+
+[node name="areae" type="Sprite2D" parent="." unique_id=1537962199]
+modulate = Color(1, 1, 0, 1)
+position = Vector2(0, 179)
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("5_j12ka")
+script = SubResource("GDScript_blmkr")
+
+[node name="Area2D" type="Area2D" parent="." unique_id=1122361413]
+position = Vector2(0, 231)
+script = SubResource("GDScript_b1jq7")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1577302093]
+shape = SubResource("RectangleShape2D_j12ka")

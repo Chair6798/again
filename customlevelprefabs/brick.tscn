@@ -1,0 +1,17 @@
+[gd_scene format=3 uid="uid://b1f2brby3q8p3"]
+
+[ext_resource type="Texture2D" uid="uid://bv7t03yse4qh4" path="res://customlevelassets/lab.png" id="1_8hls1"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_cvn0n"]
+size = Vector2(40, 40)
+
+[node name="Brick" type="StaticBody2D" unique_id=1729575293]
+
+[node name="texture" type="Sprite2D" parent="." unique_id=468213785]
+modulate = Color(0, 1, 0, 1)
+texture_filter = 1
+scale = Vector2(20, 20)
+texture = ExtResource("1_8hls1")
+
+[node name="collider" type="CollisionShape2D" parent="." unique_id=746314040]
+shape = SubResource("RectangleShape2D_cvn0n")

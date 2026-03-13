@@ -1,0 +1,190 @@
+[gd_scene format=3 uid="uid://cfor6865xsikg"]
+
+[ext_resource type="Script" uid="uid://cjhld0rml0bxy" path="res://scripts/game/level/level.gd" id="1_ru30r"]
+[ext_resource type="Texture2D" uid="uid://cwu3psy7kmg5l" path="res://texture/bg/lines.jpg" id="2_fmls3"]
+[ext_resource type="Script" uid="uid://b1f603623fmc2" path="res://scripts/game/level/level_changer.gd" id="3_e8phx"]
+[ext_resource type="Script" uid="uid://hi8jlj3rs31v" path="res://scripts/game/level/button.gd" id="4_srmi1"]
+[ext_resource type="Texture2D" uid="uid://clwumt70u7rbu" path="res://texture/assets/cube.png" id="5_vnmim"]
+[ext_resource type="AudioStream" uid="uid://b106ng0wcj2u6" path="res://audio/crack.mp3" id="6_fmls3"]
+[ext_resource type="AudioStream" uid="uid://c22wj2f8ok5h5" path="res://audio/planks_fall.mp3" id="7_e8phx"]
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_amk87"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0l062"]
+size = Vector2(200, 1050.13)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dd0lh"]
+size = Vector2(50, 1000)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ok6xr"]
+size = Vector2(160, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_niitk"]
+size = Vector2(140, 9)
+
+[sub_resource type="GDScript" id="GDScript_ru30r"]
+resource_name = "door"
+script/source = "extends StaticBody2D
+var clicks:int=0
+func _pressed():
+	clicks+=1
+	if clicks==4:
+		get_node(\"PlanksFall\").play()
+		z_index=100
+		var tw = create_tween()
+		tw.tween_property(self,\"rotation_degrees\",15,0.1)
+		tw = create_tween()
+		tw.tween_property(self,\"position\",Vector2(position.x,position.y+1000),5)
+	elif clicks>4:
+		return
+	else:
+		get_node(\"Crack\").play()
+		var tw = create_tween()
+		tw.tween_property(self,\"rotation_degrees\",15,0.1)
+		await get_tree().create_timer(0.1).timeout
+		tw = create_tween()
+		tw.tween_property(self,\"rotation_degrees\",0,0.1)
+	
+
+
+func _ready() -> void:
+	$btn.pressed.connect(_pressed)
+"
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_d5djh"]
+size = Vector2(40, 200)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ru30r"]
+size = Vector2(50, 200)
+
+[node name="Level2" type="Node2D" unique_id=355783026]
+script = ExtResource("1_ru30r")
+
+[node name="floor" type="StaticBody2D" parent="." unique_id=1967167910]
+position = Vector2(-3, 389)
+
+[node name="body" type="Sprite2D" parent="floor" unique_id=1910185079]
+modulate = Color(0, 1, 0, 1)
+z_index = 5
+texture = ExtResource("2_fmls3")
+region_enabled = true
+region_rect = Rect2(0, 0, 2000, 300)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="floor" unique_id=1108887736]
+z_index = 4096
+position = Vector2(0, -149)
+shape = SubResource("WorldBoundaryShape2D_amk87")
+
+[node name="wall_left" type="StaticBody2D" parent="." unique_id=2100160362]
+position = Vector2(-584, -481)
+
+[node name="body" type="Sprite2D" parent="wall_left" unique_id=693561389]
+modulate = Color(0, 1, 0, 1)
+z_index = 5
+rotation = 1.5708
+texture = ExtResource("2_fmls3")
+region_enabled = true
+region_rect = Rect2(0, 0, 1050.13, 300)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="wall_left" unique_id=1605848580]
+z_index = 4096
+position = Vector2(51, 0)
+shape = SubResource("RectangleShape2D_0l062")
+
+[node name="wall_right" type="StaticBody2D" parent="." unique_id=1340949519]
+position = Vector2(584, -481)
+rotation = -3.14159
+
+[node name="body" type="Sprite2D" parent="wall_right" unique_id=862112213]
+modulate = Color(0, 1, 0, 1)
+z_index = 5
+rotation = 1.5708
+texture = ExtResource("2_fmls3")
+region_enabled = true
+region_rect = Rect2(0, 0, 1050.13, 300)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="wall_right" unique_id=613576144]
+z_index = 4096
+position = Vector2(51, 0)
+shape = SubResource("RectangleShape2D_0l062")
+
+[node name="LevelChanger" type="Area2D" parent="." unique_id=374182881]
+position = Vector2(656, 39)
+disable_mode = 1
+monitorable = false
+script = ExtResource("3_e8phx")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LevelChanger" unique_id=10757952]
+z_index = 4096
+shape = SubResource("RectangleShape2D_dd0lh")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=289275683]
+position = Vector2(-669, 0)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" unique_id=910266689]
+z_index = 4096
+shape = SubResource("RectangleShape2D_dd0lh")
+
+[node name="spawn" type="Marker2D" parent="." unique_id=1779294058]
+position = Vector2(-522, 152)
+
+[node name="Label" type="Label" parent="." unique_id=1611919164]
+offset_left = -308.0
+offset_top = -201.0
+offset_right = 326.0
+offset_bottom = 116.0
+theme_override_font_sizes/font_size = 115
+text = "LEVEL11"
+horizontal_alignment = 1
+
+[node name="Button" type="StaticBody2D" parent="." unique_id=1346832758 node_paths=PackedStringArray("ConnectedObject")]
+position = Vector2(0, 231)
+script = ExtResource("4_srmi1")
+ConnectedObject = NodePath("../Door")
+enabled = false
+
+[node name="Sprite2D" type="Sprite2D" parent="Button" unique_id=1097894751]
+modulate = Color(0, 0, 0, 1)
+scale = Vector2(0.4, 0.04)
+texture = ExtResource("5_vnmim")
+
+[node name="Sprite2D2" type="Sprite2D" parent="Button" unique_id=432084993]
+modulate = Color(1, 0, 0, 1)
+z_index = -1
+position = Vector2(0, -9)
+scale = Vector2(0.35, 0.03)
+texture = ExtResource("5_vnmim")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Button" unique_id=876743726]
+z_index = 4096
+shape = SubResource("RectangleShape2D_ok6xr")
+
+[node name="collider" type="Area2D" parent="Button" unique_id=172167449]
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Button/collider" unique_id=419738062]
+z_index = 4096
+position = Vector2(0, -12.5)
+shape = SubResource("RectangleShape2D_niitk")
+
+[node name="Door" type="StaticBody2D" parent="." unique_id=1371667379]
+modulate = Color(0.133196, 0.133196, 0.133196, 1)
+position = Vector2(491, 141)
+script = SubResource("GDScript_ru30r")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Door" unique_id=197613377]
+z_index = 4096
+shape = SubResource("RectangleShape2D_d5djh")
+
+[node name="Sprite2D" type="Sprite2D" parent="Door" unique_id=1208886263]
+z_index = -10
+scale = Vector2(0.1, 0.5)
+texture = ExtResource("5_vnmim")
+
+[node name="btn" type="TouchScreenButton" parent="Door" unique_id=325534960]
+shape = SubResource("RectangleShape2D_ru30r")
+
+[node name="Crack" type="AudioStreamPlayer" parent="Door" unique_id=1645843519]
+stream = ExtResource("6_fmls3")
+
+[node name="PlanksFall" type="AudioStreamPlayer" parent="Door" unique_id=563042500]
+stream = ExtResource("7_e8phx")

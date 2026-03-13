@@ -1,0 +1,19 @@
+[remap]
+
+importer="csv_translation"
+type="Translation"
+uid="uid://cl6igv44o15b4"
+
+[deps]
+
+files=["res://localization/Локализация для Again - Лист1.ru.translation", "res://localization/Локализация для Again - Лист1.en.translation"]
+
+source_file="res://localization/Локализация для Again - Лист1.csv"
+dest_files=["res://localization/Локализация для Again - Лист1.ru.translation", "res://localization/Локализация для Again - Лист1.en.translation"]
+
+[params]
+
+compress=1
+delimiter=0
+unescape_keys=false
+unescape_translations=true

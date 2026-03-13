@@ -1,0 +1,194 @@
+[gd_scene format=3 uid="uid://d2jdikmadw55n"]
+
+[ext_resource type="Script" uid="uid://cjhld0rml0bxy" path="res://scripts/game/level/level.gd" id="1_ycof1"]
+[ext_resource type="Texture2D" uid="uid://cwu3psy7kmg5l" path="res://texture/bg/lines.jpg" id="2_cuc04"]
+[ext_resource type="Script" uid="uid://b1f603623fmc2" path="res://scripts/game/level/level_changer.gd" id="3_wg8oe"]
+[ext_resource type="Texture2D" uid="uid://clwumt70u7rbu" path="res://texture/assets/cube.png" id="4_m05wh"]
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_amk87"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0l062"]
+size = Vector2(200, 1050.13)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dd0lh"]
+size = Vector2(50, 1000)
+
+[sub_resource type="GDScript" id="GDScript_niitk"]
+resource_name = "dadsad"
+script/source = "extends \"res://scripts/game/level/door.gd\"
+
+func use_end():
+	pass
+"
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_d5djh"]
+size = Vector2(40, 200)
+
+[sub_resource type="GDScript" id="GDScript_r84c5"]
+resource_name = "waiter"
+script/source = "extends Node
+
+@export var wait_time_seconds:int=60
+var i:int = 0
+func _start_countdown():
+	i = wait_time_seconds
+	while i>0:
+		print(i)
+		await get_tree().create_timer(0.1).timeout
+		i-=1
+	get_node(\"../Door\").use_start()
+func reset_countdown(_args):
+	i=wait_time_seconds
+func _enter_tree() -> void:
+	print(\"LEVEL 12 COUNTER: ENTERED TREE! CONNECTING....\")
+	await get_tree().create_timer(1).timeout
+	await get_tree().process_frame
+	UserInput.OnInputStart.connect(reset_countdown)
+	UserInput.OnInputEnd.connect(reset_countdown)
+	_start_countdown()
+	print(\"LEVEL 12 COUNTER: CONNECTIED!\")
+func _exit_tree() -> void:
+	print(\"LEVEL 12 COUNTER: EXITED TREE! DISCONNECTING....\")
+	await get_tree().process_frame
+	UserInput.OnInputStart.disconnect(reset_countdown)
+	UserInput.OnInputEnd.disconnect(reset_countdown)
+	print(\"LEVEL 12 COUNTER: DISCONNECTED!\")
+"
+
+[sub_resource type="GDScript" id="GDScript_2ii7u"]
+resource_name = "hider"
+script/source = "extends Area2D
+
+func _body_entered(body):
+	if body == get_node(\"/root/Game/Flat/Player\"):
+		get_parent().get_node(\"Button\").visible = false
+func _body_leaved(body):
+	if body == get_node(\"/root/Game/Flat/Player\"):
+		get_parent().get_node(\"Button\").visible = true
+func _ready() -> void:
+	body_entered.connect(_body_entered)
+	body_exited.connect(_body_leaved)
+"
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_fakti"]
+size = Vector2(250, 50)
+
+[node name="Level2" type="Node2D" unique_id=814322269]
+script = ExtResource("1_ycof1")
+
+[node name="floor" type="StaticBody2D" parent="." unique_id=1713761639]
+position = Vector2(-3, 389)
+
+[node name="body" type="Sprite2D" parent="floor" unique_id=147497603]
+modulate = Color(0, 1, 0, 1)
+z_index = 5
+texture = ExtResource("2_cuc04")
+region_enabled = true
+region_rect = Rect2(0, 0, 2000, 300)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="floor" unique_id=510275151]
+z_index = 4096
+position = Vector2(0, -149)
+shape = SubResource("WorldBoundaryShape2D_amk87")
+
+[node name="wall_left" type="StaticBody2D" parent="." unique_id=2132203274]
+position = Vector2(-584, -481)
+
+[node name="body" type="Sprite2D" parent="wall_left" unique_id=937389463]
+modulate = Color(0, 1, 0, 1)
+z_index = 5
+rotation = 1.5708
+texture = ExtResource("2_cuc04")
+region_enabled = true
+region_rect = Rect2(0, 0, 1050.13, 300)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="wall_left" unique_id=1652423792]
+z_index = 4096
+position = Vector2(51, 0)
+shape = SubResource("RectangleShape2D_0l062")
+
+[node name="wall_right" type="StaticBody2D" parent="." unique_id=567862112]
+position = Vector2(584, -481)
+rotation = -3.14159
+
+[node name="body" type="Sprite2D" parent="wall_right" unique_id=226887667]
+modulate = Color(0, 1, 0, 1)
+z_index = 5
+rotation = 1.5708
+texture = ExtResource("2_cuc04")
+region_enabled = true
+region_rect = Rect2(0, 0, 1050.13, 300)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="wall_right" unique_id=358522380]
+z_index = 4096
+position = Vector2(51, 0)
+shape = SubResource("RectangleShape2D_0l062")
+
+[node name="LevelChanger" type="Area2D" parent="." unique_id=1539007849]
+position = Vector2(656, 39)
+disable_mode = 1
+monitorable = false
+script = ExtResource("3_wg8oe")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LevelChanger" unique_id=889962192]
+z_index = 4096
+shape = SubResource("RectangleShape2D_dd0lh")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=588493665]
+position = Vector2(-669, 0)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" unique_id=175502898]
+z_index = 4096
+shape = SubResource("RectangleShape2D_dd0lh")
+
+[node name="spawn" type="Marker2D" parent="." unique_id=317315680]
+position = Vector2(-522, 152)
+
+[node name="Label" type="Label" parent="." unique_id=2087673476]
+offset_left = -308.0
+offset_top = -201.0
+offset_right = 326.0
+offset_bottom = 116.0
+theme_override_font_sizes/font_size = 115
+text = "LEVEL12"
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="Button" type="StaticBody2D" parent="." unique_id=934946985]
+position = Vector2(0, 231)
+
+[node name="Sprite2D" type="Sprite2D" parent="Button" unique_id=1582620288]
+modulate = Color(0, 0, 0, 1)
+scale = Vector2(0.4, 0.04)
+texture = ExtResource("4_m05wh")
+
+[node name="Sprite2D2" type="Sprite2D" parent="Button" unique_id=1865672237]
+modulate = Color(1, 0, 0, 1)
+z_index = -1
+position = Vector2(0, -9)
+scale = Vector2(0.35, 0.03)
+texture = ExtResource("4_m05wh")
+
+[node name="Door" type="StaticBody2D" parent="." unique_id=633765062]
+modulate = Color(0.133196, 0.133196, 0.133196, 1)
+position = Vector2(491, 141)
+script = SubResource("GDScript_niitk")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Door" unique_id=1504444418]
+z_index = 4096
+shape = SubResource("RectangleShape2D_d5djh")
+
+[node name="Sprite2D" type="Sprite2D" parent="Door" unique_id=114597110]
+z_index = -10
+scale = Vector2(0.1, 0.5)
+texture = ExtResource("4_m05wh")
+
+[node name="waiter" type="Node" parent="." unique_id=859644997]
+script = SubResource("GDScript_r84c5")
+
+[node name="Area2D" type="Area2D" parent="." unique_id=702777468]
+position = Vector2(0, 213)
+script = SubResource("GDScript_2ii7u")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1029758646]
+shape = SubResource("RectangleShape2D_fakti")

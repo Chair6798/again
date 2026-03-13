@@ -1,0 +1,182 @@
+[gd_scene format=3 uid="uid://bv7m41slufy8g"]
+
+[ext_resource type="Script" uid="uid://cjhld0rml0bxy" path="res://scripts/game/level/level.gd" id="1_0duk4"]
+[ext_resource type="Texture2D" uid="uid://cwu3psy7kmg5l" path="res://texture/bg/lines.jpg" id="2_l8rxl"]
+[ext_resource type="Script" uid="uid://b1f603623fmc2" path="res://scripts/game/level/level_changer.gd" id="3_kimn8"]
+[ext_resource type="Texture2D" uid="uid://clwumt70u7rbu" path="res://texture/assets/cube.png" id="5_s6547"]
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_amk87"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0l062"]
+size = Vector2(200, 1050.13)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dd0lh"]
+size = Vector2(50, 1000)
+
+[sub_resource type="GDScript" id="GDScript_klv8x"]
+resource_name = "btn"
+script/source = "extends \"res://scripts/game/level/button.gd\"
+var md = 0
+
+func _process(delta: float) -> void:
+	if md==2 and Root.player.velocity.x!=0:
+		Root.player.die()
+
+func _ready() -> void:
+	await get_tree().process_frame
+	super._ready()
+	while is_inside_tree():
+		print(\"Step befor timer\")
+		await get_tree().create_timer(1).timeout
+		print(\"Step after timer\")
+		if md<2:
+			md+=1
+		else:
+			md=0
+		if md==0:
+			$Sprite2D2.modulate=Color(0.0, 0.784, 0.0, 1.0)
+		if md==1:
+			$Sprite2D2.modulate=Color(0.784, 0.784, 0.0, 1.0)
+		if md==2:
+			$Sprite2D2.modulate=Color(1.0, 0.0, 0.0, 1.0)
+"
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ok6xr"]
+size = Vector2(160, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_niitk"]
+size = Vector2(140, 9)
+
+[sub_resource type="GDScript" id="GDScript_niitk"]
+resource_name = "dadsad"
+script/source = "extends \"res://scripts/game/level/door.gd\"
+
+func use_end():
+	pass
+"
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_d5djh"]
+size = Vector2(40, 200)
+
+[node name="Level2" type="Node2D" unique_id=3738862]
+script = ExtResource("1_0duk4")
+
+[node name="floor" type="StaticBody2D" parent="." unique_id=1989848581]
+position = Vector2(-3, 389)
+
+[node name="body" type="Sprite2D" parent="floor" unique_id=1866414992]
+modulate = Color(0, 1, 0, 1)
+z_index = 5
+texture = ExtResource("2_l8rxl")
+region_enabled = true
+region_rect = Rect2(0, 0, 2000, 300)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="floor" unique_id=513769734]
+z_index = 4096
+position = Vector2(0, -149)
+shape = SubResource("WorldBoundaryShape2D_amk87")
+
+[node name="wall_left" type="StaticBody2D" parent="." unique_id=2015395111]
+position = Vector2(-584, -481)
+
+[node name="body" type="Sprite2D" parent="wall_left" unique_id=1760656360]
+modulate = Color(0, 1, 0, 1)
+z_index = 5
+rotation = 1.5708
+texture = ExtResource("2_l8rxl")
+region_enabled = true
+region_rect = Rect2(0, 0, 1050.13, 300)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="wall_left" unique_id=1688251248]
+z_index = 4096
+position = Vector2(51, 0)
+shape = SubResource("RectangleShape2D_0l062")
+
+[node name="wall_right" type="StaticBody2D" parent="." unique_id=38666996]
+position = Vector2(584, -481)
+rotation = -3.14159
+
+[node name="body" type="Sprite2D" parent="wall_right" unique_id=2055627476]
+modulate = Color(0, 1, 0, 1)
+z_index = 5
+rotation = 1.5708
+texture = ExtResource("2_l8rxl")
+region_enabled = true
+region_rect = Rect2(0, 0, 1050.13, 300)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="wall_right" unique_id=1231469746]
+z_index = 4096
+position = Vector2(51, 0)
+shape = SubResource("RectangleShape2D_0l062")
+
+[node name="LevelChanger" type="Area2D" parent="." unique_id=282442356]
+position = Vector2(656, 39)
+disable_mode = 1
+monitorable = false
+script = ExtResource("3_kimn8")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LevelChanger" unique_id=406483673]
+z_index = 4096
+shape = SubResource("RectangleShape2D_dd0lh")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=1045912205]
+position = Vector2(-669, 0)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" unique_id=683981737]
+z_index = 4096
+shape = SubResource("RectangleShape2D_dd0lh")
+
+[node name="spawn" type="Marker2D" parent="." unique_id=823398376]
+position = Vector2(-522, 152)
+
+[node name="Button" type="StaticBody2D" parent="." unique_id=2125752494 node_paths=PackedStringArray("ConnectedObject")]
+position = Vector2(0, 231)
+script = SubResource("GDScript_klv8x")
+ConnectedObject = NodePath("../Door")
+
+[node name="Sprite2D" type="Sprite2D" parent="Button" unique_id=1308264543]
+modulate = Color(0, 0, 0, 1)
+scale = Vector2(0.4, 0.04)
+texture = ExtResource("5_s6547")
+
+[node name="Sprite2D2" type="Sprite2D" parent="Button" unique_id=1832033506]
+modulate = Color(0, 0.78431374, 0, 1)
+z_index = -1
+position = Vector2(0, -9)
+scale = Vector2(0.35, 0.03)
+texture = ExtResource("5_s6547")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Button" unique_id=98672710]
+z_index = 4096
+shape = SubResource("RectangleShape2D_ok6xr")
+
+[node name="collider" type="Area2D" parent="Button" unique_id=523232622]
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Button/collider" unique_id=566582577]
+z_index = 4096
+position = Vector2(0, -12.5)
+shape = SubResource("RectangleShape2D_niitk")
+
+[node name="Door" type="StaticBody2D" parent="." unique_id=1538330758]
+modulate = Color(0.133196, 0.133196, 0.133196, 1)
+position = Vector2(491, 141)
+script = SubResource("GDScript_niitk")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Door" unique_id=1255628526]
+z_index = 4096
+shape = SubResource("RectangleShape2D_d5djh")
+
+[node name="Sprite2D" type="Sprite2D" parent="Door" unique_id=1456423005]
+z_index = -10
+scale = Vector2(0.1, 0.5)
+texture = ExtResource("5_s6547")
+
+[node name="Label" type="Label" parent="." unique_id=2119913240]
+offset_left = -160.0
+offset_top = -150.0
+offset_right = 160.0
+offset_bottom = 150.0
+theme_override_font_sizes/font_size = 50
+text = "LEVEL14"
+horizontal_alignment = 1
+autowrap_mode = 2

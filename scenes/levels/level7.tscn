@@ -1,0 +1,136 @@
+[gd_scene format=3 uid="uid://beecnpjstg4en"]
+
+[ext_resource type="Texture2D" uid="uid://cwu3psy7kmg5l" path="res://texture/bg/lines.jpg" id="2_268cy"]
+[ext_resource type="Script" uid="uid://b1f603623fmc2" path="res://scripts/game/level/level_changer.gd" id="2_fklld"]
+[ext_resource type="Texture2D" uid="uid://clwumt70u7rbu" path="res://texture/assets/cube.png" id="4_mnr30"]
+
+[sub_resource type="GDScript" id="GDScript_fklld"]
+resource_name = "level7"
+script/source = "extends \"res://scripts/game/level/level.gd\"
+
+func on_click_hint():
+	get_node(\"black\").visible=false
+	get_node(\"Door\").use_start()
+	get_node(\"Label\").text=\"LEVEL7_1\"
+"
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_amk87"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0l062"]
+size = Vector2(200, 1050.13)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dd0lh"]
+size = Vector2(50, 1000)
+
+[sub_resource type="GDScript" id="GDScript_niitk"]
+resource_name = "dadsad"
+script/source = "extends \"res://scripts/game/level/door.gd\"
+
+func use_end():
+	pass
+"
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_d5djh"]
+size = Vector2(40, 200)
+
+[node name="Level2" type="Node2D" unique_id=1312014043]
+script = SubResource("GDScript_fklld")
+
+[node name="floor" type="StaticBody2D" parent="." unique_id=1810535592]
+position = Vector2(-3, 389)
+
+[node name="body" type="Sprite2D" parent="floor" unique_id=1786947787]
+modulate = Color(0, 1, 0, 1)
+z_index = 5
+texture = ExtResource("2_268cy")
+region_enabled = true
+region_rect = Rect2(0, 0, 2000, 300)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="floor" unique_id=1497488986]
+z_index = 4096
+position = Vector2(0, -149)
+shape = SubResource("WorldBoundaryShape2D_amk87")
+
+[node name="wall_left" type="StaticBody2D" parent="." unique_id=1729982871]
+position = Vector2(-584, -481)
+
+[node name="body" type="Sprite2D" parent="wall_left" unique_id=1511237137]
+modulate = Color(0, 1, 0, 1)
+z_index = 5
+rotation = 1.5708
+texture = ExtResource("2_268cy")
+region_enabled = true
+region_rect = Rect2(0, 0, 1050.13, 300)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="wall_left" unique_id=267707420]
+z_index = 4096
+position = Vector2(51, 0)
+shape = SubResource("RectangleShape2D_0l062")
+
+[node name="wall_right" type="StaticBody2D" parent="." unique_id=1149389921]
+position = Vector2(584, -481)
+rotation = -3.14159
+
+[node name="body" type="Sprite2D" parent="wall_right" unique_id=527049076]
+modulate = Color(0, 1, 0, 1)
+z_index = 5
+rotation = 1.5708
+texture = ExtResource("2_268cy")
+region_enabled = true
+region_rect = Rect2(0, 0, 1050.13, 300)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="wall_right" unique_id=1428320103]
+z_index = 4096
+position = Vector2(51, 0)
+shape = SubResource("RectangleShape2D_0l062")
+
+[node name="LevelChanger" type="Area2D" parent="." unique_id=752411863]
+position = Vector2(656, 39)
+disable_mode = 1
+monitorable = false
+script = ExtResource("2_fklld")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LevelChanger" unique_id=1278436259]
+z_index = 4096
+shape = SubResource("RectangleShape2D_dd0lh")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=298195652]
+position = Vector2(-669, 0)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" unique_id=383942911]
+z_index = 4096
+shape = SubResource("RectangleShape2D_dd0lh")
+
+[node name="spawn" type="Marker2D" parent="." unique_id=1822824582]
+position = Vector2(-522, 152)
+
+[node name="Label" type="Label" parent="." unique_id=1678141840]
+z_index = 101
+offset_left = -308.0
+offset_top = -201.0
+offset_right = 326.0
+offset_bottom = 116.0
+theme_override_font_sizes/font_size = 115
+text = "LEVEL7"
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="Door" type="StaticBody2D" parent="." unique_id=1398691582]
+modulate = Color(0.133196, 0.133196, 0.133196, 1)
+position = Vector2(491, 141)
+script = SubResource("GDScript_niitk")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Door" unique_id=233494325]
+z_index = 4096
+shape = SubResource("RectangleShape2D_d5djh")
+
+[node name="Sprite2D" type="Sprite2D" parent="Door" unique_id=702830134]
+z_index = -10
+scale = Vector2(0.1, 0.5)
+texture = ExtResource("4_mnr30")
+
+[node name="black" type="Sprite2D" parent="." unique_id=505727755]
+modulate = Color(0, 0, 0, 1)
+z_index = 100
+scale = Vector2(5, 5)
+texture = ExtResource("4_mnr30")
