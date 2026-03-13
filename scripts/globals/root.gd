@@ -90,7 +90,7 @@ func next_level():
 	savedata()
 	load_level_number(currentLevel)
 
-func load_level(level:PackedScene,playerfreeze=false):
+func load_level(level:PackedScene,playerfreeze=false, playervis=true):
 	if levelobject!=null:
 		await get_tree().process_frame
 		if hint_button.is_connected("pressed",levelobject.on_click_hint):
@@ -107,7 +107,7 @@ func load_level(level:PackedScene,playerfreeze=false):
 	player.position = levelobject.get_node("spawn").position
 	player.velocity=Vector2.ZERO
 	player.freezed=playerfreeze
-	player.visible=true
+	player.visible=playervis
 	await get_tree().physics_frame
 	await get_tree().physics_frame
 	nlevel.is_ready=true
@@ -155,7 +155,7 @@ func load_menu_level():
 		game.remove_child(levelobject)
 	level_closed.emit()
 	is_menu = true
-	load_level(load("res://scenes/menu/main_menu.tscn"),true)
+	load_level(load("res://scenes/menu/main_menu.tscn"),true,false)
 
 func load_thanks_level():
 	if levelobject!=null:
@@ -163,7 +163,7 @@ func load_thanks_level():
 		game.remove_child(levelobject)
 	is_menu = true
 	level_closed.emit()
-	load_level(load("res://scenes/menu/thanks.tscn"),true)
+	load_level(load("res://scenes/menu/thanks.tscn"),true,false)
 
 func _ready() -> void:
 	TranslationServer.set_locale("ru")

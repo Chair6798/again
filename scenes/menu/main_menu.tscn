@@ -730,7 +730,6 @@ script = SubResource("GDScript_p1nwe")
 
 [node name="clevels" type="ColorRect" parent="." unique_id=22270258]
 visible = false
-anchors_preset = -1
 offset_left = -260.0
 offset_top = -160.0
 offset_right = 260.0
@@ -810,5 +809,31 @@ theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_fonts/font = ExtResource("14_27h4x")
 theme_override_font_sizes/font_size = 25
 text = "MENU_ADD"
+flat = true
+script = SubResource("GDScript_gdhp0")
+
+[node name="more_button" type="ColorRect" parent="clevels" unique_id=668582935]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -170.0
+offset_top = -40.0
+grow_vertical = 0
+color = Color(0.112325, 0.526447, 0.402977, 1)
+
+[node name="Button" type="Button" parent="clevels/more_button" unique_id=335636648]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("14_27h4x")
+theme_override_font_sizes/font_size = 25
+text = "MENU_INFO"
 flat = true
 script = SubResource("GDScript_gdhp0")
