@@ -62,4 +62,8 @@ MENU_HINT,Подсказка,Clue
 MENU_CLOSE,Закрыть,Close
 MENU_ADD,Добавить,Add
 MENU_INFO,Подробнее,Read more
+MENU_RESET,Сброс,Reset
+MENU_DELETEDATA_TEXT,"Внимание! Данная опция создана для исправления файлов, которые были созданы игрой! Если вы согласитесь то сотрёте прогресс, список пользовательских уровней и настройки!","Warning! This option is designed to repair files created by the game! If you choose to do so, you will erase your progress, user level list, and settings."
+MENU_LOADFAILED,Не удалось загрузить,Failed to load
+MENU_ERROR,Ошибка,Error
 PRELOAD_MAIN,Идёт подготовка уровней,Levels are being prepared

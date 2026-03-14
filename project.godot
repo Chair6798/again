@@ -32,7 +32,7 @@ config/icon="uid://bvg2cu04j3ie8"
 UserInput="*res://scripts/globals/user_input.gd"
 lib="*res://scripts/globals/lib.gd"
 Root="*res://scripts/globals/root.gd"
-CustomLevelLoader="*uid://c0up7tteddor8"
+CustomLevelLoader="uid://c0up7tteddor8"
 
 [dotnet]
 
@@ -40,7 +40,7 @@ project/assembly_name="Again"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/NotificationSchedulerPlugin/plugin.cfg")
+enabled=PackedStringArray("res://addons/NotificationSchedulerPlugin/plugin.cfg", "res://addons/native_dialogs/plugin.cfg")
 
 [input_devices]
 

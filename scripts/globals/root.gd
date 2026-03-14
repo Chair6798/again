@@ -137,10 +137,13 @@ func reload_level():
 func load_user_level(filetitle:String):
 	var dir = DirAccess.open("user://userlevels/")
 	if dir:
-		var file = FileAccess.open("user://userlevels/"+filetitle+".tscn",FileAccess.READ)
+		var file = FileAccess.open("user://userlevels/"+filetitle,FileAccess.READ)
 		if file:
 			file.close()
-			load_level(load("user://userlevels/"+filetitle+".tscn"))
+			if is_menu:
+				level_opened.emit()
+				is_menu=false
+			load_level(load("user://userlevels/"+filetitle))
 		else:
 			push_warning("Failed to load user level! No file!")
 			return "err"

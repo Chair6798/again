@@ -10,6 +10,7 @@
 [ext_resource type="Texture2D" uid="uid://isxaywg06ivd" path="res://texture/social_network/vk.png" id="7_1k4da"]
 [ext_resource type="Texture2D" uid="uid://c1eabsjfjnnog" path="res://texture/social_network/boosty.png" id="7_bbqo6"]
 [ext_resource type="Texture2D" uid="uid://drneofe8641hj" path="res://texture/ui/refresh.png" id="8_1k4da"]
+[ext_resource type="Texture2D" uid="uid://byp12itf5uq7c" path="res://texture/ui/build.png" id="9_27h4x"]
 [ext_resource type="Texture2D" uid="uid://b3sdtbpis3llp" path="res://texture/flags/rusflag.jpg" id="11_d4hu8"]
 [ext_resource type="Texture2D" uid="uid://biwgc3hmxqxg4" path="res://texture/flags/americaflag.jpg" id="12_p1nwe"]
 [ext_resource type="FontFile" uid="uid://bon7ut2w2w8ji" path="res://fonts/Comfortaa/static/Comfortaa-Bold.ttf" id="13_prbor"]
@@ -82,6 +83,7 @@ script/source = "extends Button
 
 func _pressed() -> void:
 	get_parent().get_parent().get_parent().get_node(\"clevels\").visible=true
+	get_parent().get_parent().get_parent().get_node(\"clevels\").get_node(\"list\").update()
 	get_parent().get_parent().visible=false
 "
 
@@ -115,6 +117,14 @@ func _pressed() -> void:
 resource_name = "reset"
 script/source = "extends TextureButton
 @onready var wind:ConfirmationDialog = get_parent().get_parent().get_parent().get_node(\"confirm_reset\")
+func _pressed() -> void:
+	wind.popup_centered()
+"
+
+[sub_resource type="GDScript" id="GDScript_vxdmp"]
+resource_name = "reset"
+script/source = "extends TextureButton
+@onready var wind:ConfirmationDialog = get_parent().get_parent().get_parent().get_node(\"deletedata_confirm\")
 func _pressed() -> void:
 	wind.popup_centered()
 "
@@ -169,6 +179,33 @@ func _process(delta: float) -> void:
 	pass
 "
 
+[sub_resource type="GDScript" id="GDScript_uaj4g"]
+resource_name = "listupdate"
+script/source = "extends ItemList
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	item_selected.connect(_selected)
+
+func _selected(idx):
+	Root.load_user_level(get_item_text(idx))
+
+func update():
+	while item_count>0:
+		remove_item(0)
+	var jsarr = FileAccess.open(\"user://userlevelsconfig.json\",FileAccess.READ)
+	if jsarr:
+		var array:Array = JSON.parse_string(jsarr.get_as_text())
+		for it in array:
+			add_item(it)
+	else:
+		push_warning(\"Failed to get file!\", jsarr.get_open_error())
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta: float) -> void:
+	pass
+"
+
 [sub_resource type="GDScript" id="GDScript_prbor"]
 resource_name = "exitlist"
 script/source = "extends Button
@@ -178,6 +215,42 @@ func _pressed() -> void:
 	get_parent().get_parent().get_parent().get_node(\"mainbuttons\").visible=true
 "
 
+[sub_resource type="GDScript" id="GDScript_41tvm"]
+resource_name = "exitlist"
+script/source = "extends Button
+@onready var filewindow:NativeFileDialog = get_node(\"NativeFileDialog\")
+func _pressed() -> void:
+	filewindow.show()
+func _appendcfg(levelname:String):
+	var levelcfgFR = FileAccess.open(\"user://userlevelsconfig.json\",FileAccess.READ)
+	var jsonarray = \"[]\"
+	if levelcfgFR:
+		jsonarray = levelcfgFR.get_as_text()
+		levelcfgFR.close()
+	else:
+		push_warning(\"No levels cfg file! Creating!\")
+	var levelcfg = FileAccess.open(\"user://userlevelsconfig.json\",FileAccess.WRITE)
+	var array:Array = JSON.parse_string(jsonarray)
+	array.append(levelname)
+	levelcfg.store_string(JSON.stringify(array))
+func _selected(ptf:String):
+	var file=FileAccess.open(ptf,FileAccess.READ)
+	if file:
+		if not DirAccess.dir_exists_absolute(\"user://userlevels/\"):
+			DirAccess.make_dir_absolute(\"user://userlevels/\")
+		var newone = FileAccess.open(\"user://userlevels/\"+ptf.get_file(),FileAccess.WRITE)
+		newone.store_string(file.get_as_text())
+		newone.close()
+		file.close()
+		_appendcfg(ptf.get_file())
+		get_parent().get_node(\"list\").update()
+	else:
+		push_warning(\"Can't get file!\", file.get_open_error())
+
+func _ready() -> void:
+	filewindow.file_selected.connect(_selected)
+"
+
 [sub_resource type="GDScript" id="GDScript_gdhp0"]
 resource_name = "exitlist"
 script/source = "extends Button
@@ -185,6 +258,48 @@ script/source = "extends Button
 func _pressed() -> void:
 	get_parent().get_parent().visible=false
 	get_parent().get_parent().get_parent().get_node(\"mainbuttons\").visible=true
+"
+
+[sub_resource type="GDScript" id="GDScript_pstia"]
+resource_name = "levelfilepicker"
+script/source = "extends FileDialog
+
+#func callwindow():
+	#pass
+	##popup_file_dialog()
+## Called when the node enters the scene tree for the first time.
+#func _ready() -> void:
+	#pass
+#
+#
+## Called every frame. 'delta' is the elapsed time since the previous frame.
+#func _process(delta: float) -> void:
+	#pass
+"
+
+[sub_resource type="GDScript" id="GDScript_3h20m"]
+resource_name = "deleter"
+script/source = "extends ConfirmationDialog
+
+var singles = [\"user://progress.dat\",\"user://userlevelsconfig.json\"]
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	confirmed.connect(_onyes)
+
+func _onyes():
+	for single in singles:
+		if FileAccess.file_exists(single):
+			DirAccess.remove_absolute(single)
+	var ul = DirAccess.open(\"user://userlevels/\")
+	if ul:
+		for f in ul.get_files():
+			ul.remove(f)
+		DirAccess.remove_absolute(\"user://userlevels/\")
+	
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta: float) -> void:
+	pass
 "
 
 [node name="MainMenu" type="Node2D" unique_id=737768645]
@@ -457,6 +572,26 @@ texture_normal = ExtResource("8_1k4da")
 ignore_texture_size = true
 stretch_mode = 0
 script = SubResource("GDScript_1k4da")
+
+[node name="fixgame" type="ColorRect" parent="mainbuttons" unique_id=538662722]
+layout_mode = 1
+anchors_preset = -1
+offset_left = -274.0
+offset_top = 40.0
+offset_right = -234.0
+offset_bottom = 80.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(1, 0, 0, 1)
+
+[node name="btn" type="TextureButton" parent="mainbuttons/fixgame" unique_id=1441166221]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+texture_normal = ExtResource("9_27h4x")
+ignore_texture_size = true
+stretch_mode = 0
+script = SubResource("GDScript_vxdmp")
 
 [node name="AccountMenuGroup" type="Control" parent="." unique_id=406765976]
 visible = false
@@ -750,7 +885,7 @@ text = "MENU_CUSTOM_LEVELS"
 horizontal_alignment = 1
 text_overrun_behavior = 1
 
-[node name="ItemList" type="ItemList" parent="clevels" unique_id=1941857424]
+[node name="list" type="ItemList" parent="clevels" unique_id=1941857424]
 layout_mode = 1
 anchors_preset = -1
 anchor_right = 1.0
@@ -759,6 +894,7 @@ offset_top = 26.0
 offset_bottom = -40.0
 grow_horizontal = 2
 grow_vertical = 2
+script = SubResource("GDScript_uaj4g")
 
 [node name="exit_button" type="ColorRect" parent="clevels" unique_id=1161617133]
 layout_mode = 1
@@ -810,7 +946,11 @@ theme_override_fonts/font = ExtResource("14_27h4x")
 theme_override_font_sizes/font_size = 25
 text = "MENU_ADD"
 flat = true
-script = SubResource("GDScript_gdhp0")
+script = SubResource("GDScript_41tvm")
+
+[node name="NativeFileDialog" type="NativeFileDialog" parent="clevels/add_button/Button" unique_id=749400663]
+title = "Select level"
+file_mode = 0
 
 [node name="more_button" type="ColorRect" parent="clevels" unique_id=668582935]
 layout_mode = 1
@@ -837,3 +977,15 @@ theme_override_font_sizes/font_size = 25
 text = "MENU_INFO"
 flat = true
 script = SubResource("GDScript_gdhp0")
+
+[node name="FileDialog" type="FileDialog" parent="." unique_id=269355313]
+script = SubResource("GDScript_pstia")
+
+[node name="deletedata_confirm" type="ConfirmationDialog" parent="." unique_id=724406964]
+oversampling_override = 1.0
+title = "MENU_RESET"
+position = Vector2i(0, 274)
+size = Vector2i(400, 184)
+dialog_text = "MENU_DELETEDATA_TEXT"
+dialog_autowrap = true
+script = SubResource("GDScript_3h20m")

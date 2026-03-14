@@ -7,6 +7,6 @@ func use_start():
 	
 
 func use_end():
-	get_parent().get_parent().get_parent().get_node("Audio").get_node("Door").play()
+	get_parent().get_parent().get_node("Audio").get_node("Door").play()
 	var t = create_tween()
 	t.tween_property(self,"position",Vector2(position.x,141),0.5)
