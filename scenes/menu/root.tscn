@@ -3,25 +3,18 @@
 [ext_resource type="Script" uid="uid://d3npy4xlsgpse" path="res://scripts/game/camera.gd" id="1_r5we4"]
 [ext_resource type="Script" uid="uid://c2xmq00ex2ur0" path="res://scripts/ui/ingame/control_button.gd" id="2_0ayld"]
 [ext_resource type="Texture2D" uid="uid://cvvsc1yv3ngqq" path="res://texture/ui/left.png" id="3_vlv83"]
-[ext_resource type="Script" uid="uid://c86eqe5aqctww" path="res://scripts/game/characters/player.gd" id="4_amk87"]
 [ext_resource type="Texture2D" uid="uid://b1pbfg0mlpowv" path="res://texture/ui/right.png" id="4_oywiy"]
 [ext_resource type="Texture2D" uid="uid://b2yqb3y4bn8bk" path="res://texture/ui/top.png" id="5_oywiy"]
-[ext_resource type="Texture2D" uid="uid://clwumt70u7rbu" path="res://texture/assets/cube.png" id="5_r5we4"]
-[ext_resource type="Texture2D" uid="uid://bl3gwxe5pfdnk" path="res://texture/assets/circle.png" id="6_0ayld"]
 [ext_resource type="Texture2D" uid="uid://cwu3psy7kmg5l" path="res://texture/bg/lines.jpg" id="7_0l062"]
 [ext_resource type="Texture2D" uid="uid://bhwn146hmme57" path="res://texture/ui/home.png" id="7_1i28j"]
 [ext_resource type="Texture2D" uid="uid://b28pafkh0mwjy" path="res://texture/ui/spot.png" id="7_64s8m"]
 [ext_resource type="Script" uid="uid://bm8wjclnhgws1" path="res://scripts/ui/ingame/hint_rect.gd" id="8_gyn2q"]
-[ext_resource type="AudioStream" uid="uid://bl14urek14bs3" path="res://audio/jump.mp3" id="10_sg40v"]
 [ext_resource type="Texture2D" uid="uid://62t57reahdug" path="res://texture/bg/ok_lines.png" id="10_vlv83"]
-[ext_resource type="AudioStream" uid="uid://csliq7fmgbsit" path="res://audio/floor1.mp3" id="11_iqos6"]
+[ext_resource type="PackedScene" uid="uid://cd21sapm5ii7m" path="res://scenes/player.tscn" id="11_ahvvh"]
 [ext_resource type="Texture2D" uid="uid://cxe46hioqun2y" path="res://texture/ui/bulb.png" id="11_oywiy"]
 [ext_resource type="AudioStream" uid="uid://rbw0v3v3crc7" path="res://audio/door.mp3" id="12_yho87"]
 [ext_resource type="AudioStream" uid="uid://d4lovy3x8dj4x" path="res://audio/button.mp3" id="13_beumq"]
-[ext_resource type="Texture2D" uid="uid://d2grhgfsmhrwg" path="res://texture/objects/physgun.png" id="15_hfdmn"]
-[ext_resource type="AudioStream" uid="uid://bn6lg7ly6saec" path="res://audio/physcannon_drop.wav" id="16_64s8m"]
 [ext_resource type="Texture2D" uid="uid://ddq6j4kusre2n" path="res://texture/studio/blackcat.png" id="17_a6d2t"]
-[ext_resource type="AudioStream" uid="uid://cerrb5g0vi7re" path="res://audio/physcannon_pickup.wav" id="17_i8m3q"]
 [ext_resource type="FontFile" uid="uid://kxhpq6ui7jpj" path="res://fonts/Caveat/Caveat-VariableFont_wght.ttf" id="18_jise5"]
 [ext_resource type="Script" uid="uid://bghedao2y4tfx" path="res://addons/NotificationSchedulerPlugin/NotificationScheduler.gd" id="20_imxsn"]
 [ext_resource type="Script" uid="uid://c32q2nncxc6s" path="res://scripts/service.gd" id="20_xh344"]
@@ -41,9 +34,6 @@ height = 182.22
 size = Vector2(400, 400)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_a6d2t"]
-size = Vector2(100, 100)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_3y2rt"]
 size = Vector2(100, 100)
 
 [sub_resource type="GDScript" id="GDScript_1i28j"]
@@ -389,62 +379,7 @@ text = "MENU_HINT"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Player" type="CharacterBody2D" parent="Flat" unique_id=175209724]
-script = ExtResource("4_amk87")
-freezed = true
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Flat/Player" unique_id=1348956005]
-shape = SubResource("RectangleShape2D_3y2rt")
-
-[node name="Cube" type="Sprite2D" parent="Flat/Player" unique_id=561041601]
-modulate = Color(0, 1, 1, 1)
-scale = Vector2(0.25, 0.25)
-texture = ExtResource("5_r5we4")
-
-[node name="leftEye" type="Sprite2D" parent="Flat/Player" unique_id=2078138409]
-texture_filter = 2
-position = Vector2(-21, -20)
-scale = Vector2(0.1, 0.1)
-texture = ExtResource("6_0ayld")
-
-[node name="subeye" type="Sprite2D" parent="Flat/Player/leftEye" unique_id=1435066848]
-self_modulate = Color(0, 0, 0, 1)
-texture_filter = 2
-scale = Vector2(0.35, 0.35)
-texture = ExtResource("6_0ayld")
-
-[node name="rightEye" type="Sprite2D" parent="Flat/Player" unique_id=157260072]
-texture_filter = 2
-position = Vector2(21, -20)
-scale = Vector2(0.1, 0.1)
-texture = ExtResource("6_0ayld")
-
-[node name="subeye" type="Sprite2D" parent="Flat/Player/rightEye" unique_id=1339799117]
-self_modulate = Color(0, 0, 0, 1)
-texture_filter = 2
-scale = Vector2(0.35, 0.35)
-texture = ExtResource("6_0ayld")
-
-[node name="jump" type="AudioStreamPlayer" parent="Flat/Player" unique_id=790044922]
-stream = ExtResource("10_sg40v")
-
-[node name="floor" type="AudioStreamPlayer" parent="Flat/Player" unique_id=1216376473]
-stream = ExtResource("11_iqos6")
-
-[node name="physgunbridge" type="Node2D" parent="Flat/Player" unique_id=1972876588]
-visible = false
-
-[node name="Physgun" type="Sprite2D" parent="Flat/Player/physgunbridge" unique_id=1578839625]
-position = Vector2(40, 0)
-scale = Vector2(0.2, 0.2)
-texture = ExtResource("15_hfdmn")
-flip_h = true
-
-[node name="physcannon_drop" type="AudioStreamPlayer" parent="Flat/Player" unique_id=1653476418]
-stream = ExtResource("16_64s8m")
-
-[node name="physcannon_pickup" type="AudioStreamPlayer" parent="Flat/Player" unique_id=612582545]
-stream = ExtResource("17_i8m3q")
+[node name="Player" parent="Flat" unique_id=12572906 instance=ExtResource("11_ahvvh")]
 
 [node name="Lines" type="Sprite2D" parent="Flat" unique_id=2088861999]
 visible = false
