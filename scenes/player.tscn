@@ -230,28 +230,28 @@ texture = ExtResource("2_ur7pv")
 
 [node name="lefteyecloser" type="Sprite2D" parent="Cube" unique_id=2057032953]
 modulate = Color(0, 1, 1, 0.52156866)
-z_index = 5
+z_index = 2
 position = Vector2(-84, -160)
 scale = Vector2(0.4, 0.2)
 texture = ExtResource("2_ur7pv")
 
 [node name="righteyecloser" type="Sprite2D" parent="Cube" unique_id=732452294]
 modulate = Color(0, 1, 1, 0.4745098)
-z_index = 5
+z_index = 2
 position = Vector2(84, -159.99997)
 scale = Vector2(0.4, 0.2)
 texture = ExtResource("2_ur7pv")
 
 [node name="lefteyecloser2" type="Sprite2D" parent="Cube" unique_id=311778628]
 modulate = Color(0, 1, 1, 0.52156866)
-z_index = 5
+z_index = 2
 position = Vector2(-84, 79.99999)
 scale = Vector2(0.4, 0.2)
 texture = ExtResource("2_ur7pv")
 
 [node name="righteyecloser2" type="Sprite2D" parent="Cube" unique_id=928798594]
 modulate = Color(0, 1, 1, 0.4745098)
-z_index = 5
+z_index = 2
 position = Vector2(84, 80.00001)
 scale = Vector2(0.4, 0.2)
 texture = ExtResource("2_ur7pv")
