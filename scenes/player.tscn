@@ -1,0 +1,70 @@
+[gd_scene format=3 uid="uid://cd21sapm5ii7m"]
+
+[ext_resource type="Script" uid="uid://c86eqe5aqctww" path="res://scripts/game/characters/player.gd" id="1_smehm"]
+[ext_resource type="Texture2D" uid="uid://clwumt70u7rbu" path="res://texture/assets/cube.png" id="2_ur7pv"]
+[ext_resource type="Texture2D" uid="uid://bl3gwxe5pfdnk" path="res://texture/assets/circle.png" id="3_y4r1p"]
+[ext_resource type="AudioStream" uid="uid://bl14urek14bs3" path="res://audio/jump.mp3" id="4_d2wvv"]
+[ext_resource type="AudioStream" uid="uid://csliq7fmgbsit" path="res://audio/floor1.mp3" id="5_3v2ag"]
+[ext_resource type="Texture2D" uid="uid://d2grhgfsmhrwg" path="res://texture/objects/physgun.png" id="6_jej6c"]
+[ext_resource type="AudioStream" uid="uid://bn6lg7ly6saec" path="res://audio/physcannon_drop.wav" id="7_f1ej7"]
+[ext_resource type="AudioStream" uid="uid://cerrb5g0vi7re" path="res://audio/physcannon_pickup.wav" id="8_oprun"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3y2rt"]
+size = Vector2(100, 100)
+
+[node name="Player" type="CharacterBody2D" unique_id=12572906]
+script = ExtResource("1_smehm")
+freezed = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1646134611]
+shape = SubResource("RectangleShape2D_3y2rt")
+
+[node name="Cube" type="Sprite2D" parent="." unique_id=1978948415]
+modulate = Color(0, 1, 1, 1)
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("2_ur7pv")
+
+[node name="leftEye" type="Sprite2D" parent="." unique_id=75522489]
+texture_filter = 2
+position = Vector2(-21, -20)
+scale = Vector2(0.1, 0.1)
+texture = ExtResource("3_y4r1p")
+
+[node name="subeye" type="Sprite2D" parent="leftEye" unique_id=987632729]
+self_modulate = Color(0, 0, 0, 1)
+texture_filter = 2
+scale = Vector2(0.35, 0.35)
+texture = ExtResource("3_y4r1p")
+
+[node name="rightEye" type="Sprite2D" parent="." unique_id=1314229773]
+texture_filter = 2
+position = Vector2(21, -20)
+scale = Vector2(0.1, 0.1)
+texture = ExtResource("3_y4r1p")
+
+[node name="subeye" type="Sprite2D" parent="rightEye" unique_id=1488603458]
+self_modulate = Color(0, 0, 0, 1)
+texture_filter = 2
+scale = Vector2(0.35, 0.35)
+texture = ExtResource("3_y4r1p")
+
+[node name="jump" type="AudioStreamPlayer" parent="." unique_id=749179354]
+stream = ExtResource("4_d2wvv")
+
+[node name="floor" type="AudioStreamPlayer" parent="." unique_id=2075050089]
+stream = ExtResource("5_3v2ag")
+
+[node name="physgunbridge" type="Node2D" parent="." unique_id=1823210464]
+visible = false
+
+[node name="Physgun" type="Sprite2D" parent="physgunbridge" unique_id=823292432]
+position = Vector2(40, 0)
+scale = Vector2(0.2, 0.2)
+texture = ExtResource("6_jej6c")
+flip_h = true
+
+[node name="physcannon_drop" type="AudioStreamPlayer" parent="." unique_id=2013469222]
+stream = ExtResource("7_f1ej7")
+
+[node name="physcannon_pickup" type="AudioStreamPlayer" parent="." unique_id=1775270464]
+stream = ExtResource("8_oprun")

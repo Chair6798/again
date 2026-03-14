@@ -38,10 +38,6 @@ CustomLevelLoader="uid://c0up7tteddor8"
 
 project/assembly_name="Again"
 
-[editor_plugins]
-
-enabled=PackedStringArray("res://addons/NotificationSchedulerPlugin/plugin.cfg", "res://addons/native_dialogs/plugin.cfg")
-
 [input_devices]
 
 pointing/emulate_touch_from_mouse=true

@@ -219,8 +219,9 @@ func _pressed() -> void:
 resource_name = "exitlist"
 script/source = "extends Button
 @onready var filewindow:NativeFileDialog = get_node(\"NativeFileDialog\")
+@onready var filedialog:FileDialog = get_node(\"FileDialog\")
 func _pressed() -> void:
-	filewindow.show()
+	filedialog.show()
 func _appendcfg(levelname:String):
 	var levelcfgFR = FileAccess.open(\"user://userlevelsconfig.json\",FileAccess.READ)
 	var jsonarray = \"[]\"
@@ -243,12 +244,14 @@ func _selected(ptf:String):
 		newone.close()
 		file.close()
 		_appendcfg(ptf.get_file())
-		get_parent().get_node(\"list\").update()
+		get_parent().get_parent().get_node(\"list\").update()
 	else:
 		push_warning(\"Can't get file!\", file.get_open_error())
 
 func _ready() -> void:
 	filewindow.file_selected.connect(_selected)
+	filedialog.file_selected.connect(_selected)
+	
 "
 
 [sub_resource type="GDScript" id="GDScript_gdhp0"]
@@ -951,6 +954,14 @@ script = SubResource("GDScript_41tvm")
 [node name="NativeFileDialog" type="NativeFileDialog" parent="clevels/add_button/Button" unique_id=749400663]
 title = "Select level"
 file_mode = 0
+
+[node name="FileDialog" type="FileDialog" parent="clevels/add_button/Button" unique_id=2058694416]
+oversampling_override = 1.0
+title = "Open a File"
+position = Vector2i(0, 36)
+file_mode = 0
+access = 2
+use_native_dialog = true
 
 [node name="more_button" type="ColorRect" parent="clevels" unique_id=668582935]
 layout_mode = 1
