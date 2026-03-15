@@ -236,6 +236,7 @@ shape = SubResource("RectangleShape2D_dd0lh")
 position = Vector2(-522, 152)
 
 [node name="Label" type="Label" parent="." unique_id=1544675985]
+z_index = -10
 offset_left = -400.0
 offset_top = -201.0
 offset_right = 400.0
@@ -246,6 +247,7 @@ horizontal_alignment = 1
 autowrap_mode = 2
 
 [node name="saimsay" type="Label" parent="." unique_id=126866778]
+z_index = -10
 offset_left = -400.0
 offset_top = -21.0
 offset_right = 400.0

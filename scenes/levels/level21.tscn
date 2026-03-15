@@ -1,10 +1,24 @@
-[gd_scene format=3 uid="uid://45lqibqn0fhf"]
+[gd_scene format=3 uid="uid://bv78457pupimm"]
 
-[ext_resource type="Script" uid="uid://cjhld0rml0bxy" path="res://scripts/game/level/level.gd" id="1_nos0u"]
-[ext_resource type="Texture2D" uid="uid://cwu3psy7kmg5l" path="res://texture/bg/lines.jpg" id="2_71baw"]
-[ext_resource type="Script" uid="uid://b1f603623fmc2" path="res://scripts/game/level/level_changer.gd" id="3_d5djh"]
-[ext_resource type="Script" uid="uid://hi8jlj3rs31v" path="res://scripts/game/level/button.gd" id="3_niitk"]
-[ext_resource type="Texture2D" uid="uid://clwumt70u7rbu" path="res://texture/assets/cube.png" id="4_d5djh"]
+[ext_resource type="Texture2D" uid="uid://cwu3psy7kmg5l" path="res://texture/bg/lines.jpg" id="2_lm0x5"]
+[ext_resource type="Script" uid="uid://b1f603623fmc2" path="res://scripts/game/level/level_changer.gd" id="3_rr74q"]
+[ext_resource type="Script" uid="uid://hi8jlj3rs31v" path="res://scripts/game/level/button.gd" id="4_yotln"]
+[ext_resource type="Texture2D" uid="uid://clwumt70u7rbu" path="res://texture/assets/cube.png" id="5_jbj7n"]
+
+[sub_resource type="GDScript" id="GDScript_2fbok"]
+resource_name = "level"
+script/source = "extends \"res://scripts/game/level/level.gd\"
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	targetzoom=Vector2(0.5,0.5)
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta: float) -> void:
+	pass
+"
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_amk87"]
 
@@ -32,7 +46,7 @@ func use_end():
 size = Vector2(40, 200)
 
 [node name="Level2" type="Node2D" unique_id=699628487]
-script = ExtResource("1_nos0u")
+script = SubResource("GDScript_2fbok")
 
 [node name="floor" type="StaticBody2D" parent="." unique_id=1361944417]
 position = Vector2(-3, 389)
@@ -40,7 +54,7 @@ position = Vector2(-3, 389)
 [node name="body" type="Sprite2D" parent="floor" unique_id=641493438]
 modulate = Color(0, 1, 0, 1)
 z_index = 5
-texture = ExtResource("2_71baw")
+texture = ExtResource("2_lm0x5")
 region_enabled = true
 region_rect = Rect2(0, 0, 2000, 300)
 
@@ -56,7 +70,7 @@ position = Vector2(-584, -481)
 modulate = Color(0, 1, 0, 1)
 z_index = 5
 rotation = 1.5708
-texture = ExtResource("2_71baw")
+texture = ExtResource("2_lm0x5")
 region_enabled = true
 region_rect = Rect2(0, 0, 1050.13, 300)
 
@@ -73,7 +87,7 @@ rotation = -3.14159
 modulate = Color(0, 1, 0, 1)
 z_index = 5
 rotation = 1.5708
-texture = ExtResource("2_71baw")
+texture = ExtResource("2_lm0x5")
 region_enabled = true
 region_rect = Rect2(0, 0, 1050.13, 300)
 
@@ -86,7 +100,7 @@ shape = SubResource("RectangleShape2D_0l062")
 position = Vector2(656, 39)
 disable_mode = 1
 monitorable = false
-script = ExtResource("3_d5djh")
+script = ExtResource("3_rr74q")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="LevelChanger" unique_id=720356158]
 z_index = 4096
@@ -115,20 +129,20 @@ autowrap_mode = 2
 
 [node name="Button" type="StaticBody2D" parent="." unique_id=1869488899 node_paths=PackedStringArray("ConnectedObject")]
 position = Vector2(0, 231)
-script = ExtResource("3_niitk")
+script = ExtResource("4_yotln")
 ConnectedObject = NodePath("../Door")
 
 [node name="Sprite2D" type="Sprite2D" parent="Button" unique_id=1566158721]
 modulate = Color(0, 0, 0, 1)
 scale = Vector2(0.4, 0.04)
-texture = ExtResource("4_d5djh")
+texture = ExtResource("5_jbj7n")
 
 [node name="Sprite2D2" type="Sprite2D" parent="Button" unique_id=1144455680]
 modulate = Color(1, 0, 0, 1)
 z_index = -1
 position = Vector2(0, -9)
 scale = Vector2(0.35, 0.03)
-texture = ExtResource("4_d5djh")
+texture = ExtResource("5_jbj7n")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Button" unique_id=321034508]
 z_index = 4096
@@ -153,4 +167,4 @@ shape = SubResource("RectangleShape2D_d5djh")
 [node name="Sprite2D" type="Sprite2D" parent="Door" unique_id=1999854614]
 z_index = -10
 scale = Vector2(0.1, 0.5)
-texture = ExtResource("4_d5djh")
+texture = ExtResource("5_jbj7n")

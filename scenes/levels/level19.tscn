@@ -102,6 +102,7 @@ script = ExtResource("1_f7qjw")
 position = Vector2(-522, 152)
 
 [node name="Label" type="Label" parent="." unique_id=577945062]
+z_index = -10
 offset_left = -308.0
 offset_top = -201.0
 offset_right = 326.0

@@ -112,6 +112,7 @@ func load_level(level:PackedScene,playerfreeze=false, playervis=true):
 	await get_tree().physics_frame
 	nlevel.is_ready=true
 	camera.make_current()
+	camera.real_zoom=nlevel.targetzoom
 	hint_button.pressed.connect(nlevel.on_click_hint)
 
 func load_level_number(level):

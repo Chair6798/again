@@ -282,6 +282,7 @@ texture_normal = ExtResource("3_vlv83")
 shape = SubResource("RectangleShape2D_0l062")
 script = ExtResource("2_0ayld")
 sortEnum = "l"
+targetscale = Vector2(0.6, 0.6)
 
 [node name="right" type="TouchScreenButton" parent="Flat/Camera" unique_id=1838000277]
 z_index = 300
@@ -290,6 +291,7 @@ scale = Vector2(0.6, 0.6)
 texture_normal = ExtResource("4_oywiy")
 shape = SubResource("RectangleShape2D_0l062")
 script = ExtResource("2_0ayld")
+targetscale = Vector2(0.6, 0.6)
 
 [node name="jump" type="TouchScreenButton" parent="Flat/Camera" unique_id=163806279]
 z_index = 300
@@ -299,6 +301,7 @@ texture_normal = ExtResource("5_oywiy")
 shape = SubResource("RectangleShape2D_0l062")
 script = ExtResource("2_0ayld")
 sortEnum = "j"
+targetscale = Vector2(0.6, 0.6)
 
 [node name="hint_button" type="TouchScreenButton" parent="Flat/Camera" unique_id=359907501]
 z_index = 300
@@ -308,6 +311,7 @@ texture_normal = ExtResource("11_oywiy")
 shape = SubResource("CapsuleShape2D_yho87")
 script = ExtResource("2_0ayld")
 sortEnum = "hint"
+targetscale = Vector2(0.6, 0.6)
 
 [node name="use_button" type="TouchScreenButton" parent="Flat/Camera" unique_id=1936910539]
 z_index = 300
@@ -317,6 +321,7 @@ texture_normal = ExtResource("7_64s8m")
 shape = SubResource("RectangleShape2D_64s8m")
 script = ExtResource("2_0ayld")
 sortEnum = "use"
+targetscale = Vector2(0.6, 0.6)
 
 [node name="home" type="TouchScreenButton" parent="Flat/Camera" unique_id=1831358856]
 z_index = 300
@@ -413,6 +418,7 @@ visible = false
 texture = ExtResource("23_i8m3q")
 
 [node name="Intro" type="Control" parent="." unique_id=1449091372]
+z_index = 9
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -471,6 +477,7 @@ script = ExtResource("20_imxsn")
 metadata/_custom_type_script = "uid://bghedao2y4tfx"
 
 [node name="PreloadInfo" type="ColorRect" parent="." unique_id=1346492132]
+z_index = 10
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0

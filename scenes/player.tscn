@@ -110,6 +110,30 @@ tracks/7/keys = {
 "update": 0,
 "values": [0.0]
 }
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("Cube:position")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/9/type = "value"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("Cube:scale")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0.25, 0.25)]
+}
 
 [sub_resource type="Animation" id="Animation_y4r1p"]
 resource_name = "blink"
@@ -161,6 +185,50 @@ tracks/3/keys = {
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [Vector2(-84, 79.99999), Vector2(-84, 1.5258789e-05), Vector2(-84, 79.99999)]
+}
+
+[sub_resource type="Animation" id="Animation_d2wvv"]
+resource_name = "falling"
+length = 2.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Cube:scale")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1, 2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(0.25, 0.3), Vector2(0.25, 0.32), Vector2(0.25, 0.3)]
+}
+
+[sub_resource type="Animation" id="Animation_3v2ag"]
+resource_name = "grounded"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Cube:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.099999994, 0.19999999),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, 10), Vector2(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Cube:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.099999994, 0.19999999),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(0.25, 0.3), Vector2(0.25, 0.2), Vector2(0.25, 0.25)]
 }
 
 [sub_resource type="Animation" id="Animation_ur7pv"]
@@ -263,11 +331,42 @@ tracks/7/keys = {
 "values": [0.0, 0.0]
 }
 
+[sub_resource type="Animation" id="Animation_jej6c"]
+resource_name = "jump"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Cube:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, 10), Vector2(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Cube:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(0.25, 0.25), Vector2(0.25, 0.2), Vector2(0.25, 0.3)]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_y4r1p"]
 _data = {
 &"RESET": SubResource("Animation_smehm"),
 &"blink": SubResource("Animation_y4r1p"),
-&"idle_1": SubResource("Animation_ur7pv")
+&"falling": SubResource("Animation_d2wvv"),
+&"grounded": SubResource("Animation_3v2ag"),
+&"idle_1": SubResource("Animation_ur7pv"),
+&"jump": SubResource("Animation_jej6c")
 }
 
 [node name="Player" type="CharacterBody2D" unique_id=12572906]
@@ -284,34 +383,33 @@ texture = ExtResource("2_ur7pv")
 
 [node name="lefteyecloser" type="Sprite2D" parent="Cube" unique_id=2057032953]
 modulate = Color(0, 1, 1, 0.52156866)
-z_index = 2
+z_index = 1
 position = Vector2(-84, -160)
 scale = Vector2(0.4, 0.2)
 texture = ExtResource("2_ur7pv")
 
 [node name="righteyecloser" type="Sprite2D" parent="Cube" unique_id=732452294]
 modulate = Color(0, 1, 1, 0.4745098)
-z_index = 2
+z_index = 1
 position = Vector2(84, -159.99997)
 scale = Vector2(0.4, 0.2)
 texture = ExtResource("2_ur7pv")
 
 [node name="lefteyecloser2" type="Sprite2D" parent="Cube" unique_id=311778628]
 modulate = Color(0, 1, 1, 0.52156866)
-z_index = 2
+z_index = 1
 position = Vector2(-84, 79.99999)
 scale = Vector2(0.4, 0.2)
 texture = ExtResource("2_ur7pv")
 
 [node name="righteyecloser2" type="Sprite2D" parent="Cube" unique_id=928798594]
 modulate = Color(0, 1, 1, 0.4745098)
-z_index = 2
+z_index = 1
 position = Vector2(84, 80.00001)
 scale = Vector2(0.4, 0.2)
 texture = ExtResource("2_ur7pv")
 
 [node name="leftEye" type="Sprite2D" parent="Cube" unique_id=75522489]
-z_as_relative = false
 texture_filter = 2
 position = Vector2(-84, -40)
 scale = Vector2(0.4, 0.4)
@@ -324,7 +422,6 @@ scale = Vector2(0.35, 0.35)
 texture = ExtResource("3_y4r1p")
 
 [node name="rightEye" type="Sprite2D" parent="Cube" unique_id=1314229773]
-z_as_relative = false
 texture_filter = 2
 position = Vector2(84, -40)
 scale = Vector2(0.4, 0.4)
@@ -357,7 +454,7 @@ stream = ExtResource("7_f1ej7")
 [node name="physcannon_pickup" type="AudioStreamPlayer" parent="." unique_id=1775270464]
 stream = ExtResource("8_oprun")
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=614102045]
+[node name="anim" type="AnimationPlayer" parent="." unique_id=614102045]
 libraries/ = SubResource("AnimationLibrary_y4r1p")
 
 [node name="CPUParticles2D" type="CPUParticles2D" parent="." unique_id=474706581]

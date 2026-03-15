@@ -4,6 +4,8 @@ class_name Player
 
 @onready var gravity:float = -500
 
+@onready var anim:AnimationPlayer = $anim
+
 var on_floor_last_frame = false
 
 var lastDelta=0.01
@@ -27,35 +29,43 @@ func _apply_gravity(delta:float,custom:float=gravity):
 
 func _apply_controls():
 	velocity.x= (lib.boolToInt(UserInput.inputs["Right"])-lib.boolToInt(UserInput.inputs["Left"])  )*get_viewport().size.y/3 * lastDelta*80
-	get_node("leftEye/subeye").position.x=(lib.boolToInt(UserInput.inputs["Right"])-lib.boolToInt(UserInput.inputs["Left"]))*30
-	get_node("rightEye/subeye").position.x=(lib.boolToInt(UserInput.inputs["Right"])-lib.boolToInt(UserInput.inputs["Left"]))*30
+	#get_node("leftEye/subeye").position.x=(lib.boolToInt(UserInput.inputs["Right"])-lib.boolToInt(UserInput.inputs["Left"]))*30
+	#get_node("rightEye/subeye").position.x=(lib.boolToInt(UserInput.inputs["Right"])-lib.boolToInt(UserInput.inputs["Left"]))*30
 
 func _apply_eyes():
-	if velocity.y<get_viewport().size.y/10 and velocity.y>-get_viewport().size.y/10 :
-		get_node("leftEye/subeye").position.y=0
-		get_node("rightEye/subeye").position.y=0
-	elif velocity.y>0:
-		get_node("leftEye/subeye").position.y=30
-		get_node("rightEye/subeye").position.y=30
-	elif velocity.y<0:
-		get_node("leftEye/subeye").position.y=-30
-		get_node("rightEye/subeye").position.y=-30
+	pass
+	#if velocity.y<get_viewport().size.y/10 and velocity.y>-get_viewport().size.y/10 :
+		#get_node("leftEye/subeye").position.y=0
+		#get_node("rightEye/subeye").position.y=0
+	#elif velocity.y>0:
+		#get_node("leftEye/subeye").position.y=30
+		#get_node("rightEye/subeye").position.y=30
+	#elif velocity.y<0:
+		#get_node("leftEye/subeye").position.y=-30
+		#get_node("rightEye/subeye").position.y=-30
+
+func _anim_end(animN:String):
+	if animN== "jump":
+		anim.play("falling")
 
 func jump(power:float=100):
 	if Root.pcontrol==false:
 		return
-	
+	anim.play("jump")
 	velocity.y-=power*lastDelta*300
 	get_node("jump").play()
 
-
+func _grounded():
+	get_node("floor").play()
+	anim.stop()
+	anim.play("grounded")
 
 func _physics_process(delta: float) -> void:
 	if freezed:
 		return
 	
 	if not on_floor_last_frame and is_on_floor():
-		get_node("floor").play()
+		_grounded()
 	on_floor_last_frame = is_on_floor()
 	_apply_gravity(delta)
 	if Root.pcontrol and can_control:

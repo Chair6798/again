@@ -1,7 +1,7 @@
 extends TouchScreenButton
 
 @export var sortEnum = "r"
-
+@export var targetscale = Vector2(1,1)
 @onready var camera = get_parent().get_parent().get_node("Camera")
 
 func _pressed():
@@ -27,6 +27,7 @@ func _released():
 		UserInput.inputs["Right"]=false
 
 func _math():
+	scale = targetscale*(1/camera.zoom.x)
 	if sortEnum=="l":
 		position.x = -get_viewport().size.x*(1/camera.zoom.x)/2
 		
@@ -36,6 +37,9 @@ func _math():
 		position.x = get_viewport().size.x*(1/camera.zoom.x)/2-texture_normal.get_width()*scale.x
 	if sortEnum=="home":
 		position.x = -get_viewport().size.x*(1/camera.zoom.x)/2
+		position.y = -get_viewport().size.y*(1/camera.zoom.y)/2
+	if sortEnum=="hint":
+		position.x = -texture_normal.get_width()*scale.x/2
 		position.y = -get_viewport().size.y*(1/camera.zoom.y)/2
 	if sortEnum == "use":
 		#position.x = get_viewport().size.x*(1/camera.zoom.x)/2-texture_normal.get_width()*scale.x-texture_normal.get_width()*scale.x

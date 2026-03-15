@@ -15,7 +15,7 @@ signal size_changed
 		if real_zoom != corrected:
 			real_zoom = corrected
 			_sync_size()
-
+@export var script_zoom:Vector2 = Vector2(1,1)
 func _sync_size():
 	var vp = get_viewport()
 	if vp == null:
@@ -30,7 +30,7 @@ func _sync_size():
 
 	# применение коэффицента
 	zoom = Vector2(koeff * real_zoom.x, koeff * real_zoom.y)
-
+	script_zoom=Vector2(koeff,koeff)
 	# отладочная печать — только в редакторе
 	if Engine.is_editor_hint():
 		print("camera _sync_size koeff=", koeff, " s=", s)
