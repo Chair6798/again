@@ -25,7 +25,7 @@ var levels = []
 var is_menu = false
 var pcontrol=true
 
-var edition="mobile"
+var edition="desktop"
 
 func replace_camera(new_position:Vector2):
 	camera.position=new_position
@@ -170,7 +170,7 @@ func load_thanks_level():
 	load_level(load("res://scenes/menu/thanks.tscn"),true,false)
 
 func _ready() -> void:
-	TranslationServer.set_locale("ru")
+	TranslationServer.set_locale("en")
 	loaddata()
 	is_menu=true
 	await _preloadLevels()

@@ -17,6 +17,12 @@ var can_control = true
 
 var current_picked:RigidBody2D=null
 
+var idletime:float=0
+
+var lasttick={
+	"%":0,
+}
+
 func pick(target:RigidBody2D):
 	current_picked=target
 	get_node("physcannon_pickup").play()
@@ -90,6 +96,15 @@ func remath():
 	pass
 	#gravity=-get_viewport().size.y/2
 
+func _process(delta: float) -> void:
+	if velocity==Vector2.ZERO:
+		idletime+=delta
+		if int(idletime)%5==0 and int(idletime)!=0 and lasttick["%"]!=int(idletime)%20:
+			anim.play("blink")
+		lasttick["%"]=int(idletime)%20
+	else:
+		idletime=0.0
+	
 
 func _ready() -> void:
 	UserInput.Jump.connect(_onJump)
